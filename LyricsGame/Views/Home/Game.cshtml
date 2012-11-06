@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Play on!";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+    <h2>@ViewBag.Message</h2>
+</hgroup>
+
+<article>
+    <button onclick="playClip()">Play</button>
+    <button onclick="pauseClip()">Pause</button>
+    <button onclick="restartClip()">Restart</button>
+
+
+    <script>
+        var audio = document.createElement("audio");
+        audio.src = "@ViewBag.Path";
+        audio.addEventListener("canplay", function ()
+            {
+                audio.currentTime = 5;
+                audio.play();
+            }
+        );
+        audio.addEventListener("timeupdate", function () {
+            if (audio.currentTime > 15) {
+                audio.currentTime = 5;
+                audio.pause();
+            }
+        }
+        );
+
+        function playClip() { audio.play(); }
+        function pauseClip() { audio.pause(); }
+        function restartClip() { audio.currentTime = 5; audio.play(); }
+
+    </script>
+</article>
+
+<aside>
+    <h3>Aside Title</h3>
+    <p>
+        Use this area to provide additional information.
+    </p>
+    <ul>
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li>@Html.ActionLink("About", "About", "Home")</li>
+        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+    </ul>
+</aside>

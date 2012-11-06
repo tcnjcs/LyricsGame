@@ -1,0 +1,59 @@
+﻿@model LyricsGame.Models.Music
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Music</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Title)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Title)
+            @Html.ValidationMessageFor(model => model.Title)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Artist)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Artist)
+            @Html.ValidationMessageFor(model => model.Artist)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Genre)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Genre)
+            @Html.ValidationMessageFor(model => model.Genre)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FilePath)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FilePath)
+            @Html.ValidationMessageFor(model => model.FilePath)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

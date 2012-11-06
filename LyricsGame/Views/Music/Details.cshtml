@@ -1,0 +1,43 @@
+﻿@model LyricsGame.Models.Music
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Music</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Title)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Title)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Artist)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Artist)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Genre)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Genre)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.FilePath)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FilePath)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.MusicID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
