@@ -47,12 +47,24 @@ namespace LyricsGame.Controllers
         // POST: /Music/Create
 
         [HttpPost]
-        public ActionResult Create(Music music)
+        public ActionResult Create(String title, String artist, String genre, HttpPostedFileBase mp3)
         {
+            Music music = new Music
+                {
+                    Title = title,
+                    Artist = artist,
+                    Genre = genre
+                };
             if (ModelState.IsValid)
             {
+
+                string path = Request.PhysicalApplicationPath + "Content\\MusicUploads\\";
+
+                music.FilePath = path + music.Artist + "-" + music.Title + ".mp3";
                 db.Music.Add(music);
-                db.SaveChanges();
+
+                if (mp3 != null)
+                    mp3.SaveAs(music.FilePath);
 
                 TagLib.File f = TagLib.File.Create(music.FilePath);
                 TimeSpan songSpan = f.Properties.Duration;
@@ -65,7 +77,7 @@ namespace LyricsGame.Controllers
                 {
                     LyricSegment newSegment = new LyricSegment();
                     newSegment.LyricSegmentID = segID;
-                    newSegment.MusicID = db.Music.Find(music).MusicID;
+                    newSegment.MusicID = music.MusicID;
                     newSegment.Start = start;
                     newSegment.End = end;
                     start += 10;
@@ -79,13 +91,13 @@ namespace LyricsGame.Controllers
                 {
                     LyricSegment newSegment = new LyricSegment();
                     newSegment.LyricSegmentID = segID;
-                    newSegment.MusicID = db.Music.Find(music).MusicID;
+                    newSegment.MusicID = music.MusicID;
                     newSegment.Start = start;
                     newSegment.End = duration;
 
                     db.Lyrics.Add(newSegment);
                 }
-
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 

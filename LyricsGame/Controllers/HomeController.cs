@@ -36,7 +36,9 @@ namespace LyricsGame.Controllers
 
         public ActionResult Game()
         {
-            Music song = music.Music.Find(1);
+            //If player is first to guess lyrics for segment, half the points for the segment will automatically 
+            //be added to user's points. Players are awarded points if they match segment in database
+            Music song = music.Music.Find(12);
             ViewBag.Path = song.FilePath;
             return View();
         }

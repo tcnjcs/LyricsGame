@@ -174,13 +174,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201210290235219_AddDescriptionPriceToProduct.cs" />
-    <Compile Include="Migrations\201210290235219_AddDescriptionPriceToProduct.Designer.cs">
-      <DependentUpon>201210290235219_AddDescriptionPriceToProduct.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201210292004111_addLyrics.cs" />
-    <Compile Include="Migrations\201210292004111_addLyrics.Designer.cs">
-      <DependentUpon>201210292004111_addLyrics.cs</DependentUpon>
+    <Compile Include="Migrations\201211150219121_addWords.cs" />
+    <Compile Include="Migrations\201211150219121_addWords.Designer.cs">
+      <DependentUpon>201211150219121_addWords.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
@@ -309,16 +305,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\MusicUploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201210290235219_AddDescriptionPriceToProduct.resx">
-      <DependentUpon>201210290235219_AddDescriptionPriceToProduct.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201210292004111_addLyrics.resx">
-      <DependentUpon>201210292004111_addLyrics.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201211150219121_addWords.resx">
+      <DependentUpon>201211150219121_addWords.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

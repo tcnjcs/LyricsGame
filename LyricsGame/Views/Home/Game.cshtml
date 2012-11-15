@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Play on!";
+    ViewBag.Title = "Play on";
 }
 
 <hgroup class="title">
@@ -18,13 +18,13 @@
         audio.src = "@ViewBag.Path";
         audio.addEventListener("canplay", function ()
             {
-                audio.currentTime = 5;
+                audio.currentTime = 30;
                 audio.play();
             }
         );
         audio.addEventListener("timeupdate", function () {
-            if (audio.currentTime > 15) {
-                audio.currentTime = 5;
+            if (audio.currentTime > 40) {
+                audio.currentTime = 30;
                 audio.pause();
             }
         }
@@ -32,7 +32,7 @@
 
         function playClip() { audio.play(); }
         function pauseClip() { audio.pause(); }
-        function restartClip() { audio.currentTime = 5; audio.play(); }
+        function restartClip() { audio.currentTime = 30; audio.play(); }
 
     </script>
 </article>

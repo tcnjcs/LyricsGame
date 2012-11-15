@@ -47,9 +47,8 @@ c:\users\leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\bin\D
 c:\users\leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.csprojResolveAssemblyReference.cache
 c:\users\leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.dll
 c:\users\leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.pdb
-C:\Users\Leebe\Documents\Visual Studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.AddDescriptionPriceToProduct.resources
-C:\Users\Leebe\Documents\Visual Studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.csproj.GenerateResource.Cache
-C:\Users\Leebe\Documents\Visual Studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.addLyrics.resources
 C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\bin\policy.2.0.taglib-sharp.dll
 C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\bin\taglib-sharp.dll
 C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\bin\policy.2.0.taglib-sharp.config
+C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.addWords.resources
+C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.csproj.GenerateResource.Cache

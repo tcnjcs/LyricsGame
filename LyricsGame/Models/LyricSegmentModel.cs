@@ -9,8 +9,10 @@ namespace LyricsGame.Models
     {
         public int LyricSegmentID { get; set; }
         public int MusicID { get; set; }
+        
         public int Start { get; set; }
         public int End { get; set; }
+        public String Lyrics { get; set; }
         public virtual Music Music { get; set; }
 
     }
