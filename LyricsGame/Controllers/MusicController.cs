@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using LyricsGame.Models;
-using TagLib;
+using Microsoft.WindowsAPICodePack.Shell;
 
 namespace LyricsGame.Controllers
 {
@@ -57,19 +57,18 @@ namespace LyricsGame.Controllers
                 };
             if (ModelState.IsValid)
             {
-
-                string path = Request.PhysicalApplicationPath + "Content\\MusicUploads\\";
-
-                music.FilePath = path + music.Artist + "-" + music.Title + ".mp3";
+                music.FilePath = "~/Content/MusicUploads/" + music.Artist + "-" + music.Title + ".mp3";
                 db.Music.Add(music);
 
                 if (mp3 != null)
-                    mp3.SaveAs(music.FilePath);
+                    mp3.SaveAs(Request.PhysicalApplicationPath + "Content\\MusicUploads\\" + music.Artist + "-" + music.Title + ".mp3");
 
-                TagLib.File f = TagLib.File.Create(music.FilePath);
-                TimeSpan songSpan = f.Properties.Duration;
-                int duration = songSpan.Seconds;
-
+                //TagLib.File f = TagLib.File.Create(Request.PhysicalApplicationPath + "Content\\MusicUploads\\" + music.Artist + "-" + music.Title + ".mp3");
+               // TimeSpan songSpan = f.Properties.Duration;
+                ShellFile f = ShellFile.FromFilePath(Request.PhysicalApplicationPath + "Content\\MusicUploads\\" + music.Artist + "-" + music.Title + ".mp3");
+                double nanoseconds;
+                double.TryParse(f.Properties.System.Media.Duration.Value.ToString(), out nanoseconds); //songSpan.Seconds;
+                int duration = (int)(nanoseconds * 0.0000001);
                 int segID = 1;
                 int start = 0;
                 int end = 10;

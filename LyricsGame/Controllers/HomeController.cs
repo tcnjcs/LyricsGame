@@ -12,7 +12,6 @@ namespace LyricsGame.Controllers
     {
         MusicDBContext music = new MusicDBContext();
 
-
         public ActionResult Index()
         {
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
@@ -38,8 +37,13 @@ namespace LyricsGame.Controllers
         {
             //If player is first to guess lyrics for segment, half the points for the segment will automatically 
             //be added to user's points. Players are awarded points if they match segment in database
-            Music song = music.Music.Find(12);
+            Music song = music.Music.Find(16);
             ViewBag.Path = song.FilePath;
+
+            IList<LyricSegment> segments = music.Lyrics.Where(od => od.MusicID == 16).ToList();
+            int selection = new Random().Next(0, segments.Count);
+            ViewBag.Start = segments[selection].Start;
+            ViewBag.End = segments[selection].End;
             return View();
         }
     }

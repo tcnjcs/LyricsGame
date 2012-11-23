@@ -52,3 +52,6 @@ C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\bin\t
 C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\bin\policy.2.0.taglib-sharp.config
 C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.addWords.resources
 C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.csproj.GenerateResource.Cache
+C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\bin\Microsoft.WindowsAPICodePack.Shell.dll
+C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\bin\Microsoft.WindowsAPICodePack.Shell.pdb
+C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\bin\Microsoft.WindowsAPICodePack.dll
