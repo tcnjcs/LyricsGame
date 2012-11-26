@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Play on";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+    <h2>@ViewBag.Message</h2>
+</hgroup>
+
+<article>
+    <p id="loadingText">Loading...</p>
+    <button onclick="playClip()">Play</button>
+    <button onclick="pauseClip()">Pause</button>
+    <button onclick="restartClip()">Restart</button>
+
+    @using (Html.BeginForm("Index", "Game", FormMethod.Post, new { id = "frm-game-submit", name = "frm-game-submit", enctype = "multipart/form-data" }))
+    {           
+        <p>
+        <input type = "radio" name = "flags" id = "CutOff" value = "CutOff"/>Cut Off<br />
+        <input type = "radio" name = "flags" id = "NoLyrics" value = "NoLyrics"/>No Lyrics<br />
+        <input type = "radio" name = "flags" id = "Lyrics" value = "Lyrics" checked = "checked"/>Input Lyrics:<br />
+
+        <input type = "hidden" name = "musicID" id ="musicID" value = "@ViewBag.MusicID" />
+        <input type = "hidden" name = "segmentID" id ="segmentID" value = "@ViewBag.SegmentID" />
+
+        </p>
+        <input type="submit" value="Submit" />
+    }
+    
+    <script>
+        var audio = document.createElement("audio");
+        audio.src = "@Url.Content(@ViewBag.Path)";
+        audio.addEventListener("canplay", function ()
+            {
+                audio.currentTime = @ViewBag.Start;
+            audio.play();
+            document.getElementById("loadingText").innerHTML="";
+
+            }
+        );
+        audio.addEventListener("timeupdate", function () {
+            if (audio.currentTime > @ViewBag.End) {
+                audio.currentTime = @ViewBag.Start;
+                audio.pause();
+            }
+        }
+        );
+
+        function playClip() { audio.play(); }
+        function pauseClip() { audio.pause(); }
+        function restartClip() { audio.currentTime = @ViewBag.Start; audio.play(); }
+
+    </script>
+</article>
+
+<aside>
+    <h3>Aside Title</h3>
+    <p>
+        Use this area to provide additional information.
+    </p>
+    <ul>
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li>@Html.ActionLink("About", "About", "Home")</li>
+        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+    </ul>
+</aside>

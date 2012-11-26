@@ -49,6 +49,7 @@ namespace LyricsGame.Controllers
         [HttpPost]
         public ActionResult Create(String title, String artist, String genre, HttpPostedFileBase mp3)
         {
+            //Create music object
             Music music = new Music
                 {
                     Title = title,
@@ -57,21 +58,24 @@ namespace LyricsGame.Controllers
                 };
             if (ModelState.IsValid)
             {
+                //Add music object to db and save mp3 to listed application directory
                 music.FilePath = "~/Content/MusicUploads/" + music.Artist + "-" + music.Title + ".mp3";
                 db.Music.Add(music);
-
                 if (mp3 != null)
                     mp3.SaveAs(Request.PhysicalApplicationPath + "Content\\MusicUploads\\" + music.Artist + "-" + music.Title + ".mp3");
 
-                //TagLib.File f = TagLib.File.Create(Request.PhysicalApplicationPath + "Content\\MusicUploads\\" + music.Artist + "-" + music.Title + ".mp3");
-               // TimeSpan songSpan = f.Properties.Duration;
+                //Calculate mp3 duration
                 ShellFile f = ShellFile.FromFilePath(Request.PhysicalApplicationPath + "Content\\MusicUploads\\" + music.Artist + "-" + music.Title + ".mp3");
                 double nanoseconds;
-                double.TryParse(f.Properties.System.Media.Duration.Value.ToString(), out nanoseconds); //songSpan.Seconds;
+                double.TryParse(f.Properties.System.Media.Duration.Value.ToString(), out nanoseconds); 
                 int duration = (int)(nanoseconds * 0.0000001);
+
+                //Initialize values for first segment
                 int segID = 1;
                 int start = 0;
                 int end = 10;
+
+                //Create all segments (except possibly last one
                 while (end <= duration) 
                 {
                     LyricSegment newSegment = new LyricSegment();
@@ -86,6 +90,8 @@ namespace LyricsGame.Controllers
 
                     segID++;
                 }
+
+                //If last segment wasn't created, create it
                 if (end != duration)
                 {
                     LyricSegment newSegment = new LyricSegment();
@@ -96,6 +102,8 @@ namespace LyricsGame.Controllers
 
                     db.Lyrics.Add(newSegment);
                 }
+
+                //Save changes to db
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

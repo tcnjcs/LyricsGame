@@ -171,6 +171,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MusicController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
@@ -181,14 +182,18 @@
     <Compile Include="Migrations\201211150219121_addWords.Designer.cs">
       <DependentUpon>201211150219121_addWords.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201211250529522_flagHandling.cs" />
+    <Compile Include="Migrations\201211250529522_flagHandling.Designer.cs">
+      <DependentUpon>201211250529522_flagHandling.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\FlagHandler.cs" />
     <Compile Include="Models\LyricSegmentModel.cs" />
     <Compile Include="Models\MusicModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\MusicUploads\dsfsd-dfsfds.mp3" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -300,7 +305,9 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
-    <None Include="Views\Home\Game.cshtml" />
+    <Content Include="Views\Game\Error.cshtml" />
+    <Content Include="Views\Game\Results.cshtml" />
+    <None Include="Views\Game\Index.cshtml" />
     <Content Include="Views\Music\Index.cshtml" />
     <Content Include="Views\Music\Details.cshtml" />
     <Content Include="Views\Music\Create.cshtml" />
@@ -309,6 +316,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\MusicUploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -316,6 +324,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201211150219121_addWords.resx">
       <DependentUpon>201211150219121_addWords.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201211250529522_flagHandling.resx">
+      <DependentUpon>201211250529522_flagHandling.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
