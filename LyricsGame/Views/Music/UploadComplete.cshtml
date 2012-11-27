@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Upload Complete";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+    <h2>@ViewBag.Message</h2>
+</hgroup>
+
+<article>
+       Your song is now in circulation!
+       <br />
+       @Html.ActionLink("Play now!", "Index", "Game")
+        <br />
+       @Html.ActionLink("Upload another song", "Create", "Music")
+        <br />
+       @Html.ActionLink("Return Home", "Index", "Home")
+</article>
+
+<aside>
+    <h3>Aside Title</h3>
+    <p>
+        Use this area to provide additional information.
+    </p>
+    <ul>
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li>@Html.ActionLink("About", "About", "Home")</li>
+        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+    </ul>
+</aside>

@@ -313,6 +313,7 @@
     <Content Include="Views\Music\Create.cshtml" />
     <Content Include="Views\Music\Edit.cshtml" />
     <Content Include="Views\Music\Delete.cshtml" />
+    <Content Include="Views\Music\UploadComplete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

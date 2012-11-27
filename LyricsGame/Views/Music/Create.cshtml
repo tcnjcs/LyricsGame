@@ -5,7 +5,8 @@
 }
 
 <h2>Create</h2>
-
+<p><font color="red">@ViewBag.Error</font></p>
+<p>Please enter a title, artist, and genre. Then select the .mp3 to be uploaded.</p>
 @using( Html.BeginForm("Create", "Music", FormMethod.Post, new {id = "frm-music-upload", name = "frm-music-upload", enctype = "multipart/form-data" })){ 
 <h3>Title</h3>
     <input type="text" id="title" name="title"/>

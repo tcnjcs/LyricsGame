@@ -18,13 +18,21 @@ namespace LyricsGame.Controllers
             //be added to user's points. Players are awarded points if they match segment in database
 
             //Temporary find song with ID and use it as chosen song
-            int musicID = 21;
+            int musicID = 24;
+
             Music song = db.Music.Find(musicID);
             ViewBag.MusicID = musicID;
             ViewBag.Path = song.FilePath;
 
-            //Find segments pertaining to chosen song and chose one randomly. Will need to also check if segment is complete
-            IList<LyricSegment> segments = db.Lyrics.Where(od => od.MusicID == musicID).ToList();
+            //Find segments pertaining to chosen song and chose one randomly.
+            IList<LyricSegment> segments = db.Lyrics.Where(ls => ls.MusicID == musicID && !ls.Complete).ToList();
+            if (segments.Count() == 0)
+            {
+                Response.StatusCode = 500;
+                Response.StatusDescription = "The selected song has been moved or deleted. Please return to the home page and start a new round."; 
+                return null;
+            }
+
             int selection = new Random().Next(0, segments.Count);
             ViewBag.SegmentID = segments[selection].LyricSegmentID;
 
@@ -47,14 +55,27 @@ namespace LyricsGame.Controllers
             }
             catch (Exception e)
             {
-                throw new HttpException(404, "Sorry an error occured while processing your input. Please reload the page and try again.");
+                Response.StatusCode = 500;
+                Response.StatusDescription = "Sorry an error occured while processing your input. Please return to the homepage and start a new round.";
+                return null;
             }
 
             LyricSegment segment = db.Lyrics.Find(lyricSegID);
-            LyricSegment nextSegment = db.Lyrics.Find(lyricSegID + 1);
 
+            //Check if special case exists and do approiate action
+            FlagHandler flagHandler = new FlagHandler(db);
             if (flags.Equals("CutOff"))
-                FlagHandler.CutOff(segment, nextSegment, db);
+            {
+                IList<LyricSegment> nextSegCandidates = db.Lyrics.Where(ls => ls.LyricSegmentID == lyricSegID+1 && ls.Start == segment.End).ToList();
+                //Procede only if segment is not last segment for song
+                if (nextSegCandidates.Count() != 0)
+                {
+                    LyricSegment nextSegment = nextSegCandidates.First();
+                    flagHandler.CutOff(segment, nextSegment);
+                }
+            }
+            else if (flags.Equals("NoLyrics"))
+                flagHandler.NoLyrics(segment);
 
             return View("Results");
         }
