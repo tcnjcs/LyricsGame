@@ -77,7 +77,7 @@ namespace LyricsGame.Controllers
             else if (flags.Equals("NoLyrics"))
                 flagHandler.NoLyrics(segment);
 
-            return View("Results");
+            return View("Results", db.Music.ToList());
         }
 
         //[HttpPost]
