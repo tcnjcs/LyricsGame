@@ -8,44 +8,56 @@
 </hgroup>
 
 <article>
-    <p id="loadingText">Loading...</p>
-    <button onclick="playClip()">Play</button>
-    <button onclick="pauseClip()">Pause</button>
-    <button onclick="restartClip()">Restart</button>
+    <p id="statusText">Loading...</p>
 
-    @using (Html.BeginForm("Index", "Game", FormMethod.Post, new { id = "frm-game-submit", name = "frm-game-submit", enctype = "multipart/form-data" }))
-    {           
-        <p>
-        <input type = "radio" name = "flags" id = "CutOff" value = "CutOff"/>Cut Off<br />
-        <input type = "radio" name = "flags" id = "NoLyrics" value = "NoLyrics"/>No Lyrics<br />
-        <input type = "radio" name = "flags" id = "Lyrics" value = "Lyrics" checked = "checked"/>Input Lyrics:<br />
+    <div id="Player">
+        <button onclick="playClip()">Play</button>
+        <button onclick="pauseClip()">Pause</button>
+        <button onclick="restartClip()">Restart</button>
 
-        <input type = "hidden" name = "musicID" id ="musicID" value = "@ViewBag.MusicID" />
-        <input type = "hidden" name = "segmentID" id ="segmentID" value = "@ViewBag.SegmentID" />
+        @using (Html.BeginForm("Index", "Game", FormMethod.Post, new { id = "frm-game-submit", name = "frm-game-submit", enctype = "multipart/form-data" }))
+        {           
+            <p>
+            <input type = "radio" name = "flags" id = "CutOff" value = "CutOff"/>Cut Off<br />
+            <input type = "radio" name = "flags" id = "NoLyrics" value = "NoLyrics"/>No Lyrics<br />
+            <input type = "radio" name = "flags" id = "Lyrics" value = "Lyrics" checked = "checked"/>Input Lyrics:<br />
 
-        </p>
-        <input type="submit" value="Submit" />
-    }
-    
-    <script>
-        var audio = document.createElement("audio");
-        audio.src = "@Url.Content(@ViewBag.Path)";
-        audio.addEventListener("canplay", function ()
-            {
-                audio.currentTime = @ViewBag.Start;
-            audio.play();
-            document.getElementById("loadingText").innerHTML="";
+            <input type = "hidden" name = "musicID" id ="musicID" value = "@ViewBag.MusicID" />
+            <input type = "hidden" name = "segmentID" id ="segmentID" value = "@ViewBag.SegmentID" />
 
-            }
-        );
-        audio.addEventListener("timeupdate", function () {
-            if (audio.currentTime > @ViewBag.End) {
-                audio.currentTime = @ViewBag.Start;
-                audio.pause();
-            }
+            </p>
+            <input type="submit" value="Submit" />
         }
-        );
+   </div> 
+    <script>
+        var a = document.createElement('audio');
+        if(!(a.canPlayType && a.canPlayType('audio/mpeg;').replace(/no/, '')))
+        {
+            document.getElementById("statusText").innerHTML="HTML5 .mp3 playback not supported in your browser";
+            document.getElementById("Player").style.visibility = 'hidden';
+        }
+        else
+        {
 
+
+            var audio = document.createElement("audio");
+            audio.src = "@Url.Content(@ViewBag.Path)";
+            audio.addEventListener("canplay", function ()
+                {
+                    audio.currentTime = @ViewBag.Start;
+                    audio.play();
+                    document.getElementById("statusText").innerHTML="";
+
+                }
+            );
+            audio.addEventListener("timeupdate", function () {
+                if (audio.currentTime > @ViewBag.End) {
+                    audio.currentTime = @ViewBag.Start;
+                    audio.pause();
+                }
+            }
+            );
+        }
         function playClip() { audio.play(); }
         function pauseClip() { audio.pause(); }
         function restartClip() { audio.currentTime = @ViewBag.Start; audio.play(); }

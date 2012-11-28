@@ -49,6 +49,20 @@ namespace LyricsGame.Controllers
         [HttpPost]
         public ActionResult Create(String title, String artist, String genre, HttpPostedFileBase mp3)
         {
+            //Error checking for input
+            if(title == "" || artist == "" || genre == "" || mp3 == null)
+            {
+                ViewBag.Error = "Please ensure all fields are populated and a file has been selected";
+                return View();
+            
+            }
+            else if(!mp3.FileName.EndsWith(".mp3"))
+            {
+                 ViewBag.Error = "At this time only files with a .mp3 file extension may be used";
+                return View();
+            }
+                
+
             //Create music object
             Music music = new Music
                 {
@@ -56,59 +70,55 @@ namespace LyricsGame.Controllers
                     Artist = artist,
                     Genre = genre
                 };
-            if (ModelState.IsValid)
+
+            //Add music object to db and save mp3 to listed application directory
+            music.FilePath = "~/Content/MusicUploads/" + music.Artist + "-" + music.Title + ".mp3";
+            db.Music.Add(music);
+            if (mp3 != null)
+                mp3.SaveAs(Request.PhysicalApplicationPath + "Content\\MusicUploads\\" + music.Artist + "-" + music.Title + ".mp3");
+
+            //Calculate mp3 duration
+            ShellFile f = ShellFile.FromFilePath(Request.PhysicalApplicationPath + "Content\\MusicUploads\\" + music.Artist + "-" + music.Title + ".mp3");
+            double nanoseconds;
+            double.TryParse(f.Properties.System.Media.Duration.Value.ToString(), out nanoseconds); 
+            int duration = (int)(nanoseconds * 0.0000001);
+
+            //Initialize values for first segment
+            int segID = 1;
+            int start = 0;
+            int end = 10;
+
+            //Create all segments (except possibly last one)
+            while (end <= duration) 
             {
-                //Add music object to db and save mp3 to listed application directory
-                music.FilePath = "~/Content/MusicUploads/" + music.Artist + "-" + music.Title + ".mp3";
-                db.Music.Add(music);
-                if (mp3 != null)
-                    mp3.SaveAs(Request.PhysicalApplicationPath + "Content\\MusicUploads\\" + music.Artist + "-" + music.Title + ".mp3");
+                LyricSegment newSegment = new LyricSegment();
+                newSegment.LyricSegmentID = segID;
+                newSegment.MusicID = music.MusicID;
+                newSegment.Start = start;
+                newSegment.End = end;
+                start += 10;
+                end += 10;
 
-                //Calculate mp3 duration
-                ShellFile f = ShellFile.FromFilePath(Request.PhysicalApplicationPath + "Content\\MusicUploads\\" + music.Artist + "-" + music.Title + ".mp3");
-                double nanoseconds;
-                double.TryParse(f.Properties.System.Media.Duration.Value.ToString(), out nanoseconds); 
-                int duration = (int)(nanoseconds * 0.0000001);
+                db.Lyrics.Add(newSegment);
 
-                //Initialize values for first segment
-                int segID = 1;
-                int start = 0;
-                int end = 10;
-
-                //Create all segments (except possibly last one
-                while (end <= duration) 
-                {
-                    LyricSegment newSegment = new LyricSegment();
-                    newSegment.LyricSegmentID = segID;
-                    newSegment.MusicID = music.MusicID;
-                    newSegment.Start = start;
-                    newSegment.End = end;
-                    start += 10;
-                    end += 10;
-
-                    db.Lyrics.Add(newSegment);
-
-                    segID++;
-                }
-
-                //If last segment wasn't created, create it
-                if (end != duration)
-                {
-                    LyricSegment newSegment = new LyricSegment();
-                    newSegment.LyricSegmentID = segID;
-                    newSegment.MusicID = music.MusicID;
-                    newSegment.Start = start;
-                    newSegment.End = duration;
-
-                    db.Lyrics.Add(newSegment);
-                }
-
-                //Save changes to db
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                segID++;
             }
 
-            return View(music);
+            //If last segment wasn't created, create it
+            if (end != duration)
+            {
+                LyricSegment newSegment = new LyricSegment();
+                newSegment.LyricSegmentID = segID;
+                newSegment.MusicID = music.MusicID;
+                newSegment.Start = start;
+                newSegment.End = duration;
+
+                db.Lyrics.Add(newSegment);
+            }
+
+            //Save changes to db
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         //
@@ -168,6 +178,11 @@ namespace LyricsGame.Controllers
         {
             db.Dispose();
             base.Dispose(disposing);
+        }
+
+        public ActionResult UploadComplete()
+        {
+            return View();
         }
     }
 }
