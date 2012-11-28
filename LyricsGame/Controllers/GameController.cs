@@ -59,5 +59,56 @@ namespace LyricsGame.Controllers
             return View("Results");
         }
 
+        //[HttpPost]
+        //public ActionResult Results(String sID)
+        //{
+        //    int songID = -1;
+
+        //    try
+        //    {
+        //        songID = Int16.Parse(sID);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        throw new HttpException(404, "An error occured while selecting a song");
+        //    }
+
+        //    Music song = db.Music.Find(songID);
+        //    ViewBag.MusicID = songID;
+        //    ViewBag.FilePath = song.FilePath;
+
+        //    return View(db.Music.ToList());
+        //}
+
+        [HttpPost]
+        public ActionResult SelectedResultSong(String songID)
+        {
+            int musicID = -1;
+
+            try
+            {
+                musicID = Int16.Parse(songID);
+            }
+            catch (Exception e)
+            {
+                throw new HttpException(404, "An error occured while obtaining song data.");
+            }
+
+            Music song = db.Music.Find(musicID);
+            ViewBag.MusicID = musicID;
+            ViewBag.FilePath = song.FilePath;
+            ViewBag.Title = song.Title;
+            ViewBag.Artist = song.Artist;
+
+            return PartialView("SelectedResultSong");
+        }
+
+        public ActionResult Results()
+        {
+            ViewBag.Message = "";
+
+            return View(db.Music.ToList());
+        }
+
     }
 }

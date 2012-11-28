@@ -1,24 +1,97 @@
-﻿@{
-    ViewBag.Title = "Thank you";
+﻿@model IEnumerable<LyricsGame.Models.Music>
+
+@{
+    ViewBag.Title = "Results Page";
 }
 
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+
+<style type="text/css">
+    div.songselector {
+        background-color: white;
+        border-style: solid;
+        border-color: black;
+        border-width: thin;
+        overflow: auto;
+        display: inline-block;
+        max-height: 600px;
+        margin-right: 20px;
+    }
+
+    div.songview {
+      
+    }
+
+    table.songselector {
+       
+    }
+
+        table.songselector td:hover {
+            background-color: grey;
+            cursor: pointer;
+        }
+
+    #float {
+        float: left;
+        background-color: inherit;
+    }
+
+    #wrapper {
+       overflow:hidden;
+       background-color: inherit;
+    }
+
+    #player {
+        width: 100%;
+    }
+</style>
+
+<script type="text/javascript">
+    function songSelected(obj) {
+        $("#title").text($(obj).text());
+
+        $("table.songselector td").css("background-color", "white");
+        $(obj).css("background-color", "lightblue");
+
+        var id =  $(obj).siblings(":first").text();
+        $.post('@Url.Action("SelectedResultSong", "Game")', {
+            songID:
+                id
+        },
+        function (data) {
+            $(".songview").html(data);
+        });
+    }
+</script>
+
 <hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h2>@ViewBag.Message</h2>
+    <!--<h1>@ViewBag.Title</h1>
+    <h2>@ViewBag.Message</h2>-->
 </hgroup>
 
-<article>
-   
-</article>
-<p>Submittion recieved!</p>
-<aside>
-    <h3>Aside Title</h3>
-    <p>
-        Use this area to provide additional information.
-    </p>
-    <ul>
-        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-        <li>@Html.ActionLink("About", "About", "Home")</li>
-        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-    </ul>
-</aside>
+<div id="wrapper">
+    <div id="float">
+        <h1>Songs</h1>
+        <div class="songselector">
+            <table class="songselector">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="display: none;">
+                            @Html.DisplayFor(modelItem => item.MusicID)
+                        </td>
+                        <td onclick="songSelected(this)">
+                            @Html.DisplayFor(modelItem => item.Title) 
+                            by 
+                            @Html.DisplayFor(modelItem => item.Artist)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div class="songview">
+        
+    </div>
+</div>
+

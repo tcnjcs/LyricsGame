@@ -1,0 +1,5 @@
+﻿<h1 id="title">@ViewBag.Title by @ViewBag.Artist</h1>
+<div style="overflow:hidden;">
+    <audio controls="controls" id="player"><source src="@Url.Content(@ViewBag.FilePath)" type="audio/mp3"/></audio>
+</div>
+<h1>Top #X Lyrics</h1> <!-- How many tops are we displaying do we count if lower etc-->
