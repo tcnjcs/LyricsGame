@@ -1,5 +1,59 @@
-﻿<h1 id="title">@ViewBag.Title by @ViewBag.Artist</h1>
+﻿@model IEnumerable<LyricsGame.Models.LyricSegment>
+
+<script type="text/javascript">
+    var segcount = 0;
+    $(document).ready(function () {
+        $("audio").bind("timeupdate", function () {
+            var audio = this;
+  
+            $(".timeseg").each(function () {
+                if (audio.currentTime > parseInt(this.textContent)) {
+                    var dontChange = parseInt(this.textContent);
+                    $(".timeseg").each(function () {
+                        if (dontChange != parseInt(this.textContent)) {
+                            this.style.backgroundColor = "inherit";
+                        }
+                    });
+                    
+                    this.style.backgroundColor = "red";
+                    return;
+                }
+            });
+        });
+    });
+</script>
+
+<h1 id="title">@ViewBag.Title by @ViewBag.Artist</h1>
 <div style="overflow:hidden;">
     <audio controls="controls" id="player"><source src="@Url.Content(@ViewBag.FilePath)" type="audio/mp3"/></audio>
 </div>
 <h1>Top #X Lyrics</h1> <!-- How many tops are we displaying do we count if lower etc-->
+<div style="overflow: auto;">
+    <table style="font-size: 12px;" id="segtable">
+        <tr id="segrow">
+            @foreach (var item in Model)
+            {
+                <td style="display:none;" id="count">
+                    <script type="text/javascript">
+                        segcount++;
+                    </script>
+                </td>
+                <td class="timeseg">
+                    @Html.DisplayFor(itemModel => item.Start)
+                </td>
+            }
+        </tr>
+        <tr>
+            @foreach (var item in Model)
+            {
+                <td>stuff</td>
+            }
+        </tr>
+         <tr>
+            @foreach (var item in Model)
+            {
+                <td>stuff</td>
+            }
+        </tr>
+    </table>
+</div>

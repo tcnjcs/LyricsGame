@@ -121,7 +121,7 @@ namespace LyricsGame.Controllers
             ViewBag.Title = song.Title;
             ViewBag.Artist = song.Artist;
 
-            return PartialView("SelectedResultSong");
+            return PartialView("SelectedResultSong", db.Lyrics.Where(ls => ls.MusicID == musicID));
         }
 
         public ActionResult Results()
