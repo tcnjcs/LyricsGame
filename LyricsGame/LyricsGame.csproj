@@ -46,9 +46,6 @@
     <Reference Include="Microsoft.WindowsAPICodePack.Shell">
       <HintPath>..\packages\WindowsAPICodePack\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
     </Reference>
-    <Reference Include="policy.2.0.taglib-sharp">
-      <HintPath>..\packages\Taglib\policy.2.0.taglib-sharp.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -119,9 +116,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="taglib-sharp">
-      <HintPath>..\packages\TagLib\taglib-sharp.dll</HintPath>
-    </Reference>
     <Reference Include="WebMatrix.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.Data.2.0.20710.0\lib\net40\WebMatrix.Data.dll</HintPath>
@@ -189,9 +183,23 @@
     <Compile Include="Migrations\201211250529522_flagHandling.Designer.cs">
       <DependentUpon>201211250529522_flagHandling.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201211292346470_LyricStatsAndLyricUsers.cs" />
+    <Compile Include="Migrations\201211292346470_LyricStatsAndLyricUsers.Designer.cs">
+      <DependentUpon>201211292346470_LyricStatsAndLyricUsers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201211300002563_fixDBcontext.cs" />
+    <Compile Include="Migrations\201211300002563_fixDBcontext.Designer.cs">
+      <DependentUpon>201211300002563_fixDBcontext.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201211300011225_collectionToSegments.cs" />
+    <Compile Include="Migrations\201211300011225_collectionToSegments.Designer.cs">
+      <DependentUpon>201211300011225_collectionToSegments.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\FlagHandler.cs" />
+    <Compile Include="Models\LyricsStatsModel.cs" />
+    <Compile Include="Models\LyricsUserModel.cs" />
+    <Compile Include="Models\InputProcessor.cs" />
     <Compile Include="Models\LyricSegmentModel.cs" />
     <Compile Include="Models\MusicModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -331,6 +339,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201211250529522_flagHandling.resx">
       <DependentUpon>201211250529522_flagHandling.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201211292346470_LyricStatsAndLyricUsers.resx">
+      <DependentUpon>201211292346470_LyricStatsAndLyricUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201211300002563_fixDBcontext.resx">
+      <DependentUpon>201211300002563_fixDBcontext.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201211300011225_collectionToSegments.resx">
+      <DependentUpon>201211300011225_collectionToSegments.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

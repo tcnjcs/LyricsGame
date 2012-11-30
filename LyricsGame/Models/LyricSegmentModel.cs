@@ -17,7 +17,10 @@ namespace LyricsGame.Models
         public int CutOffCount { get; set; }
         public int OnlyMusicCount { get; set; }
 
-        public List<String> Lyrics { get; set; }
+        public virtual ICollection<LyricsStats> LyricStats { get; set; }
+        public virtual ICollection<LyricsUser> LyricUsers { get; set; }
+
+
         public virtual Music Music { get; set; }
 
     }

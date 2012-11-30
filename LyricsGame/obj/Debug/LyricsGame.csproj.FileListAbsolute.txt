@@ -47,7 +47,6 @@ c:\users\leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\bin\D
 c:\users\leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.csprojResolveAssemblyReference.cache
 c:\users\leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.dll
 c:\users\leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.pdb
-C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\bin\policy.2.0.taglib-sharp.config
 C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.addWords.resources
 C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.csproj.GenerateResource.Cache
 C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\bin\Microsoft.WindowsAPICodePack.Shell.dll
@@ -112,3 +111,6 @@ C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\obj\De
 C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\obj\Debug\LyricsGame.pdb
 C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\bin\policy.2.0.taglib-sharp.dll
 C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\bin\taglib-sharp.dll
+C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.LyricStatsAndLyricUsers.resources
+C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.fixDBcontext.resources
+C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.collectionToSegments.resources
