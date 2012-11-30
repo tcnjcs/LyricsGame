@@ -89,7 +89,7 @@ namespace LyricsGame.Controllers
                 inputProcessor.Lyrics(segment, input);
             }
 
-
+            
             return View("Results", db.Music.ToList());
         }
 
@@ -105,7 +105,9 @@ namespace LyricsGame.Controllers
             }
             catch (Exception e)
             {
-                throw new HttpException(404, "An error occured while obtaining song data.");
+                Response.StatusCode = 500;
+                Response.StatusDescription = "The selected song has been moved or deleted. Please return to the home page and start a new round.";
+                return null;
             }
 
             Music song = db.Music.Find(musicID);
@@ -117,12 +119,35 @@ namespace LyricsGame.Controllers
             return PartialView("SelectedResultSong", db.Lyrics.Where(ls => ls.MusicID == musicID));
         }
 
+        [HttpPost]
+        public ActionResult ResultSongPossibleLyrics(String songID)
+        {
+            int musicID = -1;
+
+            try
+            {
+                musicID = Int16.Parse(songID);
+            }
+            catch (Exception e)
+            {
+                Response.StatusCode = 500;
+                Response.StatusDescription = "The selected song has been moved or deleted. Please return to the home page and start a new round.";
+                return null;
+            }
+
+            Music song = db.Music.Find(musicID);
+            ViewBag.SegNum = song.Lyrics.Count;
+
+            return PartialView("ResultSongPossibleLyrics");
+        }
+
         public ActionResult Results()
         {
             ViewBag.Message = "";
 
+            //db.Database.SqlQuery(System.Type.GetType("String"), "select DISTINCT(genre) from Musics", null);
+
             return View(db.Music.ToList());
         }
-
     }
 }
