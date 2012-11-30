@@ -40,7 +40,10 @@ namespace LyricsGame.Models
         {
             segment.OnlyMusicCount++;
             if (segment.OnlyMusicCount > 4)
+            {
                 segment.Complete = true;
+                songCompletion(segment.Music);
+            }
 
             db.SaveChanges();
         }
@@ -109,16 +112,20 @@ namespace LyricsGame.Models
                     topStat.LyricSegment.Complete = true;
 
                     //If the segment is complete check if the song is complete
-                    IList<LyricSegment> segments = db.Lyrics.Where(ls => ls.LyricSegmentID == topStat.LyricSegmentID && ls.Complete == false).ToList();
-                    if (segments.Count() == 0)
-                        topStat.LyricSegment.Music.Complete = true;
-                       
+                    songCompletion(topStat.LyricSegment.Music);
                 }
             }
 
             db.SaveChanges();
 
             return;
+        }
+
+        private void songCompletion(Music song)
+        {
+            IList<LyricSegment> segments = db.Lyrics.Where(ls => ls.MusicID  == song.MusicID && ls.Complete == false).ToList();
+            if (segments.Count() == 0)
+                song.Complete = true;
         }
     }
 }
