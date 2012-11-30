@@ -16,6 +16,7 @@ namespace LyricsGame.Models
         public void CutOff(LyricSegment segment, LyricSegment nextSegment)
         {
                 segment.CutOffCount++;
+                
                 if (segment.CutOffCount % 5 == 0 && segment.CutOffCount < 20)
                 {
                     segment.End += 0.5;

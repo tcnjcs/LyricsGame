@@ -18,7 +18,7 @@ namespace LyricsGame.Controllers
             //be added to user's points. Players are awarded points if they match segment in database
 
             //Temporary find song with ID and use it as chosen song
-            int musicID = 27;
+            int musicID = 29;
 
             Music song = db.Music.Find(musicID);
             ViewBag.MusicID = musicID;
@@ -93,6 +93,7 @@ namespace LyricsGame.Controllers
         public ActionResult SelectedResultSong(String songID)
         {
             int musicID = -1;
+            
 
             try
             {
