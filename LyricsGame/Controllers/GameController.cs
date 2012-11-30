@@ -35,7 +35,6 @@ namespace LyricsGame.Controllers
 
             int selection = new Random().Next(0, segments.Count);
             ViewBag.SegmentID = segments[selection].LyricSegmentID;
-
             //Pull start and end times of chosen segment
             ViewBag.Start = segments[selection].Start;
             ViewBag.End = segments[selection].End;
@@ -63,43 +62,23 @@ namespace LyricsGame.Controllers
             LyricSegment segment = db.Lyrics.Find(lyricSegID);
 
             //Check if special case exists and do approiate action
-            FlagHandler flagHandler = new FlagHandler(db);
+            InputProcessor inputProcessor = new InputProcessor(db);
             if (flags.Equals("CutOff"))
             {
-                IList<LyricSegment> nextSegCandidates = db.Lyrics.Where(ls => ls.LyricSegmentID == lyricSegID+1 && ls.Start == segment.End).ToList();
+                IList<LyricSegment> nextSegCandidates = db.Lyrics.Where(ls => ls.MusicID == segment.MusicID && ls.Start == segment.End).ToList();
                 //Procede only if segment is not last segment for song
                 if (nextSegCandidates.Count() != 0)
                 {
                     LyricSegment nextSegment = nextSegCandidates.First();
-                    flagHandler.CutOff(segment, nextSegment);
+                    inputProcessor.CutOff(segment, nextSegment);
                 }
             }
             else if (flags.Equals("NoLyrics"))
-                flagHandler.NoLyrics(segment);
+                inputProcessor.NoLyrics(segment);
+
 
             return View("Results", db.Music.ToList());
         }
-
-        //[HttpPost]
-        //public ActionResult Results(String sID)
-        //{
-        //    int songID = -1;
-
-        //    try
-        //    {
-        //        songID = Int16.Parse(sID);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        throw new HttpException(404, "An error occured while selecting a song");
-        //    }
-
-        //    Music song = db.Music.Find(songID);
-        //    ViewBag.MusicID = songID;
-        //    ViewBag.FilePath = song.FilePath;
-
-        //    return View(db.Music.ToList());
-        //}
 
         [HttpPost]
         public ActionResult SelectedResultSong(String songID)
