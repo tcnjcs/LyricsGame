@@ -53,6 +53,10 @@ namespace LyricsGame.Controllers
             if(title == "" || artist == "" || genre == "" || mp3 == null)
             {
                 ViewBag.Error = "Please ensure all fields are populated and a file has been selected";
+                ViewBag.SongTitle = title;
+                ViewBag.Artist = artist;
+                ViewBag.Genre = genre;
+                
                 return View();
             
             }
@@ -68,7 +72,8 @@ namespace LyricsGame.Controllers
                 {
                     Title = title,
                     Artist = artist,
-                    Genre = genre
+                    Genre = genre,
+                    Complete = false
                 };
 
             //Add music object to db and save mp3 to listed application directory

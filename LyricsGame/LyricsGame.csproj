@@ -195,6 +195,14 @@
     <Compile Include="Migrations\201211300011225_collectionToSegments.Designer.cs">
       <DependentUpon>201211300011225_collectionToSegments.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201211300217393_lyricsinStats.cs" />
+    <Compile Include="Migrations\201211300217393_lyricsinStats.Designer.cs">
+      <DependentUpon>201211300217393_lyricsinStats.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201211300447215_musicComplete.cs" />
+    <Compile Include="Migrations\201211300447215_musicComplete.Designer.cs">
+      <DependentUpon>201211300447215_musicComplete.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\LyricsStatsModel.cs" />
@@ -348,6 +356,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201211300011225_collectionToSegments.resx">
       <DependentUpon>201211300011225_collectionToSegments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201211300217393_lyricsinStats.resx">
+      <DependentUpon>201211300217393_lyricsinStats.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201211300447215_musicComplete.resx">
+      <DependentUpon>201211300447215_musicComplete.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
