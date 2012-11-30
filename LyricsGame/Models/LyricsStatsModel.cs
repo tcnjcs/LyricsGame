@@ -10,6 +10,7 @@ namespace LyricsGame.Models
         public int LyricsStatsID{ get; set; }
         public int LyricSegmentID { get; set; }
 
+        public String Lyrics { get; set; }
         public int Votes { get; set; }
         public int Count { get; set; }
 

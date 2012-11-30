@@ -9,11 +9,11 @@
 <p>Please enter a title, artist, and genre. Then select the .mp3 to be uploaded.</p>
 @using( Html.BeginForm("Create", "Music", FormMethod.Post, new {id = "frm-music-upload", name = "frm-music-upload", enctype = "multipart/form-data" })){ 
 <h3>Title</h3>
-    <input type="text" id="title" name="title"/>
+    <input type="text" id="title" name="title" value="@ViewBag.SongTitle"/>
     <h3>Artist</h3>
-    <input type="text" id="artist" name="artist"/>
+    <input type="text" id="artist" name="artist" value ="@ViewBag.Artist"/>
     <h3>Genre</h3>
-    <input type="text" id="genre" name="genre"/>
+    <input type="text" id="genre" name="genre" value ="@ViewBag.Genre"/>
 
 
     <p>

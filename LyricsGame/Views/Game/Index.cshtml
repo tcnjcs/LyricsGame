@@ -9,8 +9,9 @@
 
 <article>
     <p id="statusText">Loading...</p>
-    <p>@ViewBag.Test</p>
+    <p><font color="red">@ViewBag.Error</font></p>
     <div id="Player">
+        
         <button onclick="playClip()">Play</button>
         <button onclick="pauseClip()">Pause</button>
         <button onclick="restartClip()">Restart</button>
@@ -21,6 +22,7 @@
             <input type = "radio" name = "flags" id = "CutOff" value = "CutOff"/>Cut Off<br />
             <input type = "radio" name = "flags" id = "NoLyrics" value = "NoLyrics"/>No Lyrics<br />
             <input type = "radio" name = "flags" id = "Lyrics" value = "Lyrics" checked = "checked"/>Input Lyrics:<br />
+            <input type=  "text"  name=  "input" id = "Input"/>
 
             <input type = "hidden" name = "musicID" id ="musicID" value = "@ViewBag.MusicID" />
             <input type = "hidden" name = "segmentID" id ="segmentID" value = "@ViewBag.SegmentID" />
@@ -30,8 +32,8 @@
         }
    </div> 
     <script>
-        var a = document.createElement('audio');
-        if(!(a.canPlayType && a.canPlayType('audio/mpeg;').replace(/no/, '')))
+        var audio = document.createElement("audio");
+        if(!(audio.canPlayType && audio.canPlayType('audio/mpeg;').replace(/no/, '')))
         {
             document.getElementById("statusText").innerHTML="HTML5 .mp3 playback not supported in your browser";
             document.getElementById("Player").style.visibility = 'hidden';
@@ -39,8 +41,6 @@
         else
         {
 
-
-            var audio = document.createElement("audio");
             audio.src = "@Url.Content(@ViewBag.Path)";
             audio.addEventListener("canplay", function ()
                 {

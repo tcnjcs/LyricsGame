@@ -53,12 +53,31 @@ namespace LyricsGame.Controllers
             if(title == "" || artist == "" || genre == "" || mp3 == null)
             {
                 ViewBag.Error = "Please ensure all fields are populated and a file has been selected";
+                ViewBag.SongTitle = title;
+                ViewBag.Artist = artist;
+                ViewBag.Genre = genre;
+                
                 return View();
             
             }
             else if(!mp3.FileName.EndsWith(".mp3"))
             {
-                 ViewBag.Error = "At this time only files with a .mp3 file extension may be used";
+                ViewBag.Error = "At this time only files with a .mp3 file extension may be used";
+                ViewBag.SongTitle = title;
+                ViewBag.Artist = artist;
+                ViewBag.Genre = genre;
+
+                return View();
+            }
+
+            IList<Music> sameSongs = db.Music.Where(sl => sl.Title.Equals(title) && sl.Artist.Equals(artist)).ToList();
+            if (sameSongs.Count() != 0)
+            {
+                ViewBag.Error = "This song has already been uploaded";
+                ViewBag.SongTitle = title;
+                ViewBag.Artist = artist;
+                ViewBag.Genre = genre;
+
                 return View();
             }
                 
@@ -68,7 +87,8 @@ namespace LyricsGame.Controllers
                 {
                     Title = title,
                     Artist = artist,
-                    Genre = genre
+                    Genre = genre,
+                    Complete = false
                 };
 
             //Add music object to db and save mp3 to listed application directory
@@ -83,8 +103,19 @@ namespace LyricsGame.Controllers
             double.TryParse(f.Properties.System.Media.Duration.Value.ToString(), out nanoseconds); 
             int duration = (int)(nanoseconds * 0.0000001);
 
+            //Make sure song can be processed and is at least 10 seconds in length
+            if (duration < 10)
+            {
+                ViewBag.Error = "Song is too short or has a corrupt duration header. Please upload another file";
+                ViewBag.SongTitle = title;
+                ViewBag.Artist = artist;
+                ViewBag.Genre = genre;
+
+                return View();
+            }
+
             //Initialize values for first segment
-            int segID = 1;
+            int segID = 0;
             int start = 0;
             int end = 10;
 
@@ -99,21 +130,12 @@ namespace LyricsGame.Controllers
                 start += 10;
                 end += 10;
 
-                db.Lyrics.Add(newSegment);
+                //If last segment wont be created, append to end of active segment
+                if (end > duration)
+                    newSegment.End = duration;
 
+                db.Lyrics.Add(newSegment);
                 segID++;
-            }
-
-            //If last segment wasn't created, create it
-            if (end != duration)
-            {
-                LyricSegment newSegment = new LyricSegment();
-                newSegment.LyricSegmentID = segID;
-                newSegment.MusicID = music.MusicID;
-                newSegment.Start = start;
-                newSegment.End = duration;
-
-                db.Lyrics.Add(newSegment);
             }
 
             //Save changes to db

@@ -43,8 +43,15 @@ namespace LyricsGame.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(String flags, String segmentID)
+        public ActionResult Index(String flags, String segmentID, String input)
         {
+            if (flags == "" || input == "")
+            {
+                ViewBag.Error = "Please enter lyrics!";
+                return View();
+
+            }
+
             int lyricSegID = 1;
 
             //Prevent breaking things if improper segmentID recieved
@@ -75,6 +82,8 @@ namespace LyricsGame.Controllers
             }
             else if (flags.Equals("NoLyrics"))
                 inputProcessor.NoLyrics(segment);
+            else if (flags.Equals("Lyrics"))
+                inputProcessor.Lyrics(segment, input);
 
             
             return View("Results", db.Music.ToList());
@@ -84,6 +93,7 @@ namespace LyricsGame.Controllers
         public ActionResult SelectedResultSong(String songID)
         {
             int musicID = -1;
+            
 
             try
             {
