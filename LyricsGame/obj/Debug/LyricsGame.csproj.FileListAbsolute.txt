@@ -103,12 +103,9 @@ C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\bin\Do
 C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\bin\DotNetOpenAuth.OAuth.xml
 C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\bin\DotNetOpenAuth.OpenId.xml
 C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
-C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\bin\policy.2.0.taglib-sharp.config
 C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\obj\Debug\LyricsGame.csprojResolveAssemblyReference.cache
 C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\obj\Debug\LyricsGame.Migrations.addWords.resources
 C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\obj\Debug\LyricsGame.Migrations.flagHandling.resources
 C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\obj\Debug\LyricsGame.csproj.GenerateResource.Cache
 C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\obj\Debug\LyricsGame.dll
 C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\obj\Debug\LyricsGame.pdb
-C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\bin\policy.2.0.taglib-sharp.dll
-C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\bin\taglib-sharp.dll
