@@ -116,3 +116,5 @@ C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\obj\De
 C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\obj\Debug\LyricsGame.Migrations.collectionToSegments.resources
 C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.lyricsinStats.resources
 C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.musicComplete.resources
+C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\obj\Debug\LyricsGame.Migrations.lyricsinStats.resources
+C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\obj\Debug\LyricsGame.Migrations.musicComplete.resources

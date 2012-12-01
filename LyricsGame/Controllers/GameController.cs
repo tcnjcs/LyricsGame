@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using LyricsGame.Models;
+using System.Data;
 
 namespace LyricsGame.Controllers
 {
@@ -18,7 +19,7 @@ namespace LyricsGame.Controllers
             //be added to user's points. Players are awarded points if they match segment in database
 
             //Temporary find song with ID and use it as chosen song
-            int musicID = 29;
+            int musicID = 32;
 
             Music song = db.Music.Find(musicID);
             ViewBag.MusicID = musicID;
@@ -132,9 +133,51 @@ namespace LyricsGame.Controllers
             }
 
             Music song = db.Music.Find(musicID);
-            ViewBag.SegNum = song.Lyrics.Count;
+            IList<LyricSegment> lyricSeg = song.Lyrics.ToList();
+            ViewBag.SegNum = lyricSeg.Count;
+            int maxSeg = 0;
 
-            return PartialView("ResultSongPossibleLyrics");
+            foreach (LyricSegment ls in lyricSeg)
+            {
+                IList<LyricsStats> lyStat = db.LyricStats.Where(lstat => lstat.LyricSegmentID == ls.LyricSegmentID).ToList();
+                if (lyStat.Count > maxSeg)
+                {
+                    maxSeg = lyStat.Count;
+                }
+            }
+            ViewBag.MaxNumOfSegs = maxSeg;
+
+            DataTable dt = new DataTable("StatLyrics");
+
+            /*for (int i = 0; i < lyricSeg.Count; i++)
+            {
+                dt.Columns.Add(new DataColumn(i.ToString(),typeof(string)));
+            }*/
+
+            foreach (LyricSegment ls in lyricSeg)
+            {
+                dt.Columns.Add(new DataColumn(ls.LyricSegmentID.ToString(),typeof(string)));
+                IList<LyricsStats> lyStat = db.LyricStats.Where(lstat => lstat.LyricSegmentID == ls.LyricSegmentID).ToList();
+                int i = 0;
+                foreach (LyricsStats lys in lyStat)
+                {
+                    if (i >= dt.Rows.Count)
+                    {
+                        DataRow row = dt.NewRow();
+                        dt.Rows.Add(row);
+                    }
+                    dt.Rows[i][ls.LyricSegmentID.ToString()] = lys.Lyrics;
+                    i++;
+                }
+            }
+
+            /*for (int i = 0; i < maxSeg; i++)
+            {
+                DataRow row = dt.NewRow();
+                dt.Rows.Add(row);
+            }*/
+
+            return PartialView("ResultSongPossibleLyrics", dt);
         }
 
         public ActionResult Results()

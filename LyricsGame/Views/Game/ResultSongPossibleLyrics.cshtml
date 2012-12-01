@@ -1,27 +1,15 @@
-﻿<script type="text/javascript">
-    var segNum = '@ViewBag.SegNum';
-    //var largestCount = '
-    for (var i = 0; i < 10; i++)
-    {
-        $(segtable).append("<tr></tr>");
-    }
-    //$(segtable).each(function(i) {
-        for (var i = 0; i < segNum; i++) {
-            $("tr:not(:first)", segtable).append("<td>Ipsum Lorem</td>");
+﻿@using System.Data
+@model System.Data.DataTable
+
+
+
+@foreach (DataRow row in Model.Rows)
+{
+    <tr>
+        @foreach (var cell in row.ItemArray)
+        {
+           <td style="white-space:nowrap;">@cell.ToString()</td>
         }
-    //});
-
-   
-   
-    /*$(document).ready(function () {
-        $("tr", segtable).each(function (i) {
-            $("td", this).each(function (j) {
-                $(this).text(i + "," + j);
-            });
-        });
-    });*/
-    
-
-    
-</script>
+    </tr> 
+}
 
