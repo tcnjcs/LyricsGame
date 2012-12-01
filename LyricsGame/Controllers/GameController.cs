@@ -46,12 +46,7 @@ namespace LyricsGame.Controllers
         [HttpPost]
         public ActionResult Index(String flags, String segmentID, String input)
         {
-            if (flags == "" || input == "")
-            {
-                ViewBag.Error = "Please enter lyrics!";
-                return View();
 
-            }
 
             int lyricSegID = 1;
 

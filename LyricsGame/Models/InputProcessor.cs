@@ -101,13 +101,14 @@ namespace LyricsGame.Models
                 LyricsStats newEntry = new LyricsStats();
                 newEntry.Lyrics = input;
                 newEntry.LyricSegmentID = segment.LyricSegmentID;
+                newEntry.Available = false;
                 newEntry.Votes = 1;
                 db.LyricStats.Add(newEntry);
             }
             //If the user's submission is already in a table check if the segment is complete
             else
             {
-                double voteRatio = (double)(maxVotes/votes);
+                double voteRatio = (double)(maxVotes)/votes;
                 if (voteRatio > 0.5 && maxVotes > 9)
                 {
                     topStat.LyricSegment.Complete = true;
@@ -115,6 +116,16 @@ namespace LyricsGame.Models
                     //If the segment is complete check if the song is complete
                     songCompletion(topStat.LyricSegment.Music);
                 }
+            }
+
+            //Mark all lyricstats meeting threshold as available to be voted on
+            for (int i = 0; i < lyricStatEntries.Count(); i++)
+            {
+                double statRatio = (double)(lyricStatEntries[i].Votes) / votes;
+                if (lyricStatEntries[i].Votes > 9 &&  statRatio > 0.5)
+                    lyricStatEntries[i].Available = true;
+                else
+                    lyricStatEntries[i].Available = false;
             }
 
             db.SaveChanges();
