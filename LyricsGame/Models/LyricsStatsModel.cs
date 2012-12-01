@@ -11,8 +11,8 @@ namespace LyricsGame.Models
         public int LyricSegmentID { get; set; }
 
         public String Lyrics { get; set; }
+        public bool Available { get; set; }
         public int Votes { get; set; }
-        public int Count { get; set; }
 
         public virtual LyricSegment LyricSegment { get; set; }
 
