@@ -82,9 +82,13 @@ namespace LyricsGame.Controllers
                 }
             }
             else if (flags.Equals("NoLyrics"))
+            {
                 inputProcessor.NoLyrics(segment);
+            }
             else if (flags.Equals("Lyrics"))
+            {
                 inputProcessor.Lyrics(segment, input);
+            }
 
             
             return View("Results", db.Music.ToList());
