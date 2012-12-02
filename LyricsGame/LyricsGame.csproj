@@ -203,14 +203,6 @@
     <Compile Include="Migrations\201211300447215_musicComplete.Designer.cs">
       <DependentUpon>201211300447215_musicComplete.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201212010233519_addAvailableToStat.cs" />
-    <Compile Include="Migrations\201212010233519_addAvailableToStat.Designer.cs">
-      <DependentUpon>201212010233519_addAvailableToStat.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201212010317302_removeCount.cs" />
-    <Compile Include="Migrations\201212010317302_removeCount.Designer.cs">
-      <DependentUpon>201212010317302_removeCount.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\LyricsStatsModel.cs" />
@@ -371,12 +363,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201211300447215_musicComplete.resx">
       <DependentUpon>201211300447215_musicComplete.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201212010233519_addAvailableToStat.resx">
-      <DependentUpon>201212010233519_addAvailableToStat.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201212010317302_removeCount.resx">
-      <DependentUpon>201212010317302_removeCount.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
