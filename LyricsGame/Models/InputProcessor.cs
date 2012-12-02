@@ -49,16 +49,17 @@ namespace LyricsGame.Models
             db.SaveChanges();
         }
 
-        public void Lyrics(LyricSegment segment, String input)
+        public void Lyrics(LyricSegment segment, String input, double startTime)
         {
             int userID = 0;
+            TimeSpan now = DateTime.UtcNow - new DateTime(1970, 1, 1);
 
             //New entry in LyricUser table
             LyricsUser userEntry = new LyricsUser();
             userEntry.LyricSegmentID = segment.LyricSegmentID;
             userEntry.Lyrics = input;
             userEntry.UserID = userID;
-            //userEntry.Time = Time;
+            userEntry.Time = (int)(now.TotalSeconds-startTime);
             db.LyricUsers.Add(userEntry);
 
             //Strip out non alphanumeric characters including spaces

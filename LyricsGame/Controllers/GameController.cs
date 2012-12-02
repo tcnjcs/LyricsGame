@@ -19,7 +19,7 @@ namespace LyricsGame.Controllers
             //be added to user's points. Players are awarded points if they match segment in database
 
             //Temporary find song with ID and use it as chosen song
-            int musicID = 32;
+            int musicID = 1;
 
             Music song = db.Music.Find(musicID);
             ViewBag.MusicID = musicID;
@@ -40,14 +40,15 @@ namespace LyricsGame.Controllers
             ViewBag.Start = segments[selection].Start;
             ViewBag.End = segments[selection].End;
 
+            TimeSpan now = DateTime.UtcNow - new DateTime(1970, 1, 1);
+            ViewBag.StartTime = now.TotalSeconds;
+
             return View();
         }
 
         [HttpPost]
-        public ActionResult Index(String flags, String segmentID, String input)
+        public ActionResult Index(String flags, String segmentID, String input, double startTime)
         {
-
-
             int lyricSegID = 1;
 
             //Prevent breaking things if improper segmentID recieved
@@ -82,7 +83,7 @@ namespace LyricsGame.Controllers
             }
             else if (flags.Equals("Lyrics"))
             {
-                inputProcessor.Lyrics(segment, input);
+                inputProcessor.Lyrics(segment, input, startTime);
             }
 
             
