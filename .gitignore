@@ -2,3 +2,5 @@
 *.jpg
 LyricsGame/obj/Debug/LyricsGame.dll
 LyricsGame/bin/LyricsGame.dll
+LyricsGame/App_Data/Music.mdf
+LyricsGame/App_Data/Music_log.ldf
