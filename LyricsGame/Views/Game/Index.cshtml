@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Play on";
 }
-
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
 <hgroup class="title">
     <h1>@ViewBag.Title.</h1>
     <h2>@ViewBag.Message</h2>
@@ -32,6 +32,10 @@
         }
    </div> 
     <script>
+        $(document).ready(function () {
+            $(Input).focus();
+        });
+
         function updateField(){
             if(document.getElementById('Lyrics').checked) {
                 document.getElementById('Input').disabled = false;
@@ -54,23 +58,22 @@
             audio.src = "@Url.Content(@ViewBag.Path)";
             audio.addEventListener("canplay", function ()
                 {
-                    audio.currentTime = @ViewBag.Start;
+                    audio.currentTime = '@ViewBag.Start';
                     audio.play();
                     document.getElementById("statusText").innerHTML="";
 
                 }
             );
             audio.addEventListener("timeupdate", function () {
-                if (audio.currentTime > @ViewBag.End) {
-                    audio.currentTime = @ViewBag.Start;
+                if (audio.currentTime > '@ViewBag.End') {
+                    audio.currentTime = '@ViewBag.Start';
                     audio.pause();
                 }
-            }
-            );
+            });
         }
         function playClip() { audio.play(); }
         function pauseClip() { audio.pause(); }
-        function restartClip() { audio.currentTime = @ViewBag.Start; audio.play(); }
+        function restartClip() { audio.currentTime = '@ViewBag.Start'; audio.play(); }
 
     </script>
 </article>

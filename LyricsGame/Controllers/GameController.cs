@@ -15,30 +15,7 @@ namespace LyricsGame.Controllers
 
         public ActionResult Index()
         {
-            //If player is first to guess lyrics for segment, half the points for the segment will automatically 
-            //be added to user's points. Players are awarded points if they match segment in database
-
-            //Temporary find song with ID and use it as chosen song
-            int musicID = 2;
-
-            Music song = db.Music.Find(musicID);
-            ViewBag.MusicID = musicID;
-            ViewBag.Path = song.FilePath;
-
-            //Find segments pertaining to chosen song and chose one randomly.
-            IList<LyricSegment> segments = db.Lyrics.Where(ls => ls.MusicID == musicID && !ls.Complete).ToList();
-            if (segments.Count() == 0)
-            {
-                Response.StatusCode = 500;
-                Response.StatusDescription = "The selected song has been moved or deleted. Please return to the home page and start a new round."; 
-                return null;
-            }
-
-            int selection = new Random().Next(0, segments.Count);
-            ViewBag.SegmentID = segments[selection].LyricSegmentID;
-            //Pull start and end times of chosen segment
-            ViewBag.Start = segments[selection].Start;
-            ViewBag.End = segments[selection].End;
+            sendSongSegment();
 
             return View();
         }
@@ -85,8 +62,10 @@ namespace LyricsGame.Controllers
                 inputProcessor.Lyrics(segment, input);
             }
 
+            sendSongSegment();
+
             
-            return View("Results", db.Music.ToList());
+            return View();
         }
 
         [HttpPost]
@@ -186,6 +165,34 @@ namespace LyricsGame.Controllers
             //db.Database.SqlQuery(System.Type.GetType("String"), "select DISTINCT(genre) from Musics", null);
 
             return View(db.Music.ToList());
+        }
+
+        public void sendSongSegment()
+        {
+            //If player is first to guess lyrics for segment, half the points for the segment will automatically 
+            //be added to user's points. Players are awarded points if they match segment in database
+
+            //Temporary find song with ID and use it as chosen song
+
+            int musicID = 9;
+
+            Music song = db.Music.Find(musicID);
+            ViewBag.MusicID = musicID;
+            ViewBag.Path = song.FilePath;
+
+            //Find segments pertaining to chosen song and chose one randomly.
+            IList<LyricSegment> segments = db.Lyrics.Where(ls => ls.MusicID == musicID && !ls.Complete).ToList();
+            if (segments.Count() == 0)
+            {
+                Response.StatusCode = 500;
+                Response.StatusDescription = "The selected song has been moved or deleted. Please return to the home page and start a new round."; 
+            }
+
+            int selection = new Random().Next(0, segments.Count);
+            ViewBag.SegmentID = segments[selection].LyricSegmentID;
+            //Pull start and end times of chosen segment
+            ViewBag.Start = segments[selection].Start;
+            ViewBag.End = segments[selection].End;
         }
     }
 }

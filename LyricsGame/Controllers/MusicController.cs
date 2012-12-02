@@ -117,7 +117,8 @@ namespace LyricsGame.Controllers
             //Initialize values for first segment
             int segID = 0;
             int start = 0;
-            int end = 10;
+            int end = 5;
+            int clipLength = 5;
 
             //Create all segments (except possibly last one)
             while (end <= duration) 
@@ -127,8 +128,8 @@ namespace LyricsGame.Controllers
                 newSegment.MusicID = music.MusicID;
                 newSegment.Start = start;
                 newSegment.End = end;
-                start += 10;
-                end += 10;
+                start += clipLength;
+                end += clipLength;
 
                 //If last segment wont be created, append to end of active segment
                 if (end > duration)
