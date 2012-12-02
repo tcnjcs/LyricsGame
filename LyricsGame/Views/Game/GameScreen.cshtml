@@ -1,0 +1,65 @@
+﻿<p id="statusText">Loading...</p>
+    <p><font color="red">@ViewBag.Error</font></p>
+    <div id="Player">
+        
+        <button onclick="playClip()">Play</button>
+        <button onclick="pauseClip()">Pause</button>
+        <button onclick="restartClip()">Restart</button>
+
+        @using (Html.BeginForm("Index", "Game", FormMethod.Post, new { id = "frm-game-submit", name = "frm-game-submit", enctype = "multipart/form-data" }))
+        {           
+            <p>
+            <input type = "radio" name = "flags" id = "CutOff" onclick="updateField()" value = "CutOff"/>Cut Off<br />
+            <input type = "radio" name = "flags" id = "NoLyrics" onclick="updateField()" value = "NoLyrics"/>No Lyrics<br />
+            <input type = "radio" name = "flags" id = "Lyrics" onclick="updateField()" value = "Lyrics" checked = "checked"/>Input Lyrics:<br />
+            <input type=  "text"  name=  "input" id = "Input"/>
+
+            <input type = "hidden" name = "musicID" id ="musicID" value = "@ViewBag.MusicID" />
+            <input type = "hidden" name = "segmentID" id ="segmentID" value = "@ViewBag.SegmentID" />
+            <input type = "hidden" name = "startTime" id="startTime" value = "@ViewBag.StartTime"/>
+            </p>
+            <input type="submit" value="Submit" />
+        }
+   </div> 
+    <script>
+        $(document).ready(function () {
+            $(Input).focus();
+        });
+
+        function updateField() {
+            if (document.getElementById('Lyrics').checked) {
+                document.getElementById('Input').disabled = false;
+            }
+            else {
+                document.getElementById('Input').value = "";
+                document.getElementById('Input').disabled = true;
+            }
+        }
+
+        var audio = document.createElement("audio");
+        if (!(audio.canPlayType && audio.canPlayType('audio/mpeg;').replace(/no/, ''))) {
+            document.getElementById("statusText").innerHTML = "HTML5 .mp3 playback not supported in your browser";
+            document.getElementById("Player").style.visibility = 'hidden';
+        }
+        else {
+
+            audio.src = "@Url.Content(@ViewBag.Path)";
+            audio.addEventListener("canplay", function () {
+                audio.currentTime = '@ViewBag.Start';
+                audio.play();
+                document.getElementById("statusText").innerHTML = "";
+
+            }
+            );
+            audio.addEventListener("timeupdate", function () {
+                if (audio.currentTime > '@ViewBag.End') {
+                    audio.currentTime = '@ViewBag.Start';
+                    audio.pause();
+                }
+            });
+        }
+        function playClip() { audio.play(); }
+        function pauseClip() { audio.pause(); }
+        function restartClip() { audio.currentTime = '@ViewBag.Start'; audio.play(); }
+
+    </script>
