@@ -9,11 +9,11 @@
     $(document).ready(function () {
         //$("#segrow td:first()").css("background-color", "SandyBrown");
        
-        $("audio").bind("play", function () {
+        $("#player").bind("play", function () {
             if (!(Math.floor(this.currentTime) == 0)) { return; }
             $("#segtable tr td:nth-child(1)").css("background-color", "SandyBrown");
         });
-        $("audio").bind("timeupdate", function () {
+        $("#player").bind("timeupdate", function () {
             var audio = this;
             atime = audio.currentTime;
           
