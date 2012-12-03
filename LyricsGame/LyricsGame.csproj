@@ -179,36 +179,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201211150219121_addWords.cs" />
-    <Compile Include="Migrations\201211150219121_addWords.Designer.cs">
-      <DependentUpon>201211150219121_addWords.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201211250529522_flagHandling.cs" />
-    <Compile Include="Migrations\201211250529522_flagHandling.Designer.cs">
-      <DependentUpon>201211250529522_flagHandling.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201211292346470_LyricStatsAndLyricUsers.cs" />
-    <Compile Include="Migrations\201211292346470_LyricStatsAndLyricUsers.Designer.cs">
-      <DependentUpon>201211292346470_LyricStatsAndLyricUsers.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201211300002563_fixDBcontext.cs" />
-    <Compile Include="Migrations\201211300002563_fixDBcontext.Designer.cs">
-      <DependentUpon>201211300002563_fixDBcontext.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201211300011225_collectionToSegments.cs" />
-    <Compile Include="Migrations\201211300011225_collectionToSegments.Designer.cs">
-      <DependentUpon>201211300011225_collectionToSegments.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201211300217393_lyricsinStats.cs" />
-    <Compile Include="Migrations\201211300217393_lyricsinStats.Designer.cs">
-      <DependentUpon>201211300217393_lyricsinStats.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201211300447215_musicComplete.cs" />
-    <Compile Include="Migrations\201211300447215_musicComplete.Designer.cs">
-      <DependentUpon>201211300447215_musicComplete.cs</DependentUpon>
+    <Compile Include="Migrations\201212031057143_userSegmentVotes.cs" />
+    <Compile Include="Migrations\201212031057143_userSegmentVotes.Designer.cs">
+      <DependentUpon>201212031057143_userSegmentVotes.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\UserSegmentVotes.cs" />
     <Compile Include="Models\LyricsStatsModel.cs" />
     <Compile Include="Models\LyricsUserModel.cs" />
     <Compile Include="Models\InputProcessor.cs" />
@@ -352,26 +329,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201211150219121_addWords.resx">
-      <DependentUpon>201211150219121_addWords.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201211250529522_flagHandling.resx">
-      <DependentUpon>201211250529522_flagHandling.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201211292346470_LyricStatsAndLyricUsers.resx">
-      <DependentUpon>201211292346470_LyricStatsAndLyricUsers.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201211300002563_fixDBcontext.resx">
-      <DependentUpon>201211300002563_fixDBcontext.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201211300011225_collectionToSegments.resx">
-      <DependentUpon>201211300011225_collectionToSegments.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201211300217393_lyricsinStats.resx">
-      <DependentUpon>201211300217393_lyricsinStats.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201211300447215_musicComplete.resx">
-      <DependentUpon>201211300447215_musicComplete.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201212031057143_userSegmentVotes.resx">
+      <DependentUpon>201212031057143_userSegmentVotes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

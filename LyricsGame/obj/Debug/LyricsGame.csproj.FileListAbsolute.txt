@@ -47,12 +47,9 @@ c:\users\leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\bin\D
 c:\users\leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.csprojResolveAssemblyReference.cache
 c:\users\leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.dll
 c:\users\leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.pdb
-C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.addWords.resources
-C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.csproj.GenerateResource.Cache
 C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\bin\Microsoft.WindowsAPICodePack.Shell.dll
 C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\bin\Microsoft.WindowsAPICodePack.Shell.pdb
 C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\bin\Microsoft.WindowsAPICodePack.dll
-C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.flagHandling.resources
 C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\bin\LyricsGame.dll
 C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\bin\LyricsGame.pdb
 C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\bin\Antlr3.Runtime.dll
@@ -108,14 +105,9 @@ C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\obj\De
 C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\obj\Debug\LyricsGame.csproj.GenerateResource.Cache
 C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\obj\Debug\LyricsGame.dll
 C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\obj\Debug\LyricsGame.pdb
-C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.LyricStatsAndLyricUsers.resources
-C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.fixDBcontext.resources
-C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.collectionToSegments.resources
 C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\obj\Debug\LyricsGame.Migrations.LyricStatsAndLyricUsers.resources
 C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\obj\Debug\LyricsGame.Migrations.fixDBcontext.resources
 C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\obj\Debug\LyricsGame.Migrations.collectionToSegments.resources
-C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.lyricsinStats.resources
-C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.musicComplete.resources
 C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\obj\Debug\LyricsGame.Migrations.lyricsinStats.resources
 C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\obj\Debug\LyricsGame.Migrations.musicComplete.resources
 C:\LyricsGame2\LyricsGame\LyricsGame\bin\LyricsGame.dll
@@ -181,3 +173,7 @@ C:\LyricsGame2\LyricsGame\LyricsGame\obj\Debug\LyricsGame.csproj.GenerateResourc
 C:\LyricsGame2\LyricsGame\LyricsGame\obj\Debug\LyricsGame.dll
 C:\LyricsGame2\LyricsGame\LyricsGame\obj\Debug\LyricsGame.pdb
 C:\LyricsGame2\LyricsGame\LyricsGame\obj\Debug\LyricsGame.csprojResolveAssemblyReference.cache
+C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\bin\DotNetOpenAuth.pdb
+C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\bin\DotNetOpenAuth.xml
+C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.userSegmentVotes.resources
+C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.csproj.GenerateResource.Cache
