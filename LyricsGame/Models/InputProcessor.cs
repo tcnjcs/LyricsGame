@@ -13,32 +13,41 @@ namespace LyricsGame.Models
         {
             this.db = db;
         }
-        public void CutOff(LyricSegment segment, LyricSegment nextSegment)
+        public bool CutOff(LyricSegment segment, LyricSegment nextSegment)
         {
-                segment.CutOffCount++;
                 
-                if (segment.CutOffCount % 5 == 0 && segment.CutOffCount < 20)
-                {
-                    segment.End += 0.5;
-                    nextSegment.Start += 0.5;
-                }
-                else if(segment.CutOffCount >= 25)
-                {
-                    segment.End = nextSegment.End;
+            bool match = false;
+            if (segment.CutOffCount != 0)
+                match = true;
 
-                    segment.LyricStats.Clear();
-                    segment.LyricUsers.Clear();
+            segment.CutOffCount++;
+            if (segment.CutOffCount % 5 == 0 && segment.CutOffCount < 20)
+            {
+                segment.End += 0.5;
+                nextSegment.Start += 0.5;
+            }
+            else if(segment.CutOffCount >= 25)
+            {
+                segment.End = nextSegment.End;
 
-                    segment.CutOffCount = 0;
-                    segment.OnlyMusicCount = 0;
+                segment.LyricStats.Clear();
+                segment.LyricUsers.Clear();
 
-                    db.Lyrics.Remove(nextSegment);
-                }
+                segment.CutOffCount = 0;
+                segment.OnlyMusicCount = 0;
+
+                db.Lyrics.Remove(nextSegment);
+            }
             db.SaveChanges();
+
+            return match;
         }
 
-        public void NoLyrics(LyricSegment segment)
+        public bool NoLyrics(LyricSegment segment)
         {
+            bool match = false;
+            if (segment.OnlyMusicCount != 0)
+                match = true;
             segment.OnlyMusicCount++;
             if (segment.OnlyMusicCount > 4)
             {
@@ -47,13 +56,17 @@ namespace LyricsGame.Models
             }
 
             db.SaveChanges();
+
+            return match;
         }
 
-        public void Lyrics(LyricSegment segment, String input, double startTime)
+        public bool Lyrics(LyricSegment segment, String input, double startTime)
         {
             int userID = 0;
             TimeSpan now = DateTime.UtcNow - new DateTime(1970, 1, 1);
-
+            bool match = false;
+           
+            
             //New entry in LyricUser table
             LyricsUser userEntry = new LyricsUser();
             userEntry.LyricSegmentID = segment.LyricSegmentID;
@@ -73,7 +86,7 @@ namespace LyricsGame.Models
             int maxVotes = 0; //number of votes the top input has recieved
             int votes = 0; //number of total votes
             LyricsStats topStat = null; //top input
-
+            LyricsStats userSub = null;
             //Go through all previously submitted inputs
             for (int i = 0; i < lyricStatEntries.Count(); i++)
             {
@@ -83,6 +96,7 @@ namespace LyricsGame.Models
                 if(inputMod.Equals(entryMod))
                 {
                     lyricStatEntries[i].Votes++; //increase votes for this submission
+                    userSub = lyricStatEntries[i];
                     newInput = false; //the users submission was already in the table
                 }
 
@@ -104,6 +118,7 @@ namespace LyricsGame.Models
                 newEntry.LyricSegmentID = segment.LyricSegmentID;
                 newEntry.Available = false;
                 newEntry.Votes = 1;
+                userSub = newEntry;
                 db.LyricStats.Add(newEntry);
             }
             //If the user's submission is already in a table check if the segment is complete
@@ -117,8 +132,17 @@ namespace LyricsGame.Models
                     //If the segment is complete check if the song is complete
                     songCompletion(topStat.LyricSegment.Music);
                 }
-            }
 
+                //Check if user input is in top 5 submissions
+                List<LyricsStats> topResults = (from p in db.LyricStats orderby p.Votes descending select p).Take(5).ToList();
+                for (int i = 0; i < topResults.Count(); i++)
+                {
+                    if (topResults[i].Lyrics.Equals(input))
+                        match = true;
+
+                }
+            }
+            
             //Mark all lyricstats meeting threshold as available to be voted on
             for (int i = 0; i < lyricStatEntries.Count(); i++)
             {
@@ -127,11 +151,12 @@ namespace LyricsGame.Models
                     lyricStatEntries[i].Available = true;
                 else
                     lyricStatEntries[i].Available = false;
+
             }
 
             db.SaveChanges();
 
-            return;
+            return match;
         }
 
         private void songCompletion(Music song)

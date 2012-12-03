@@ -14,6 +14,8 @@ namespace LyricsGame.Controllers
     {
 
         MusicDBContext db = new MusicDBContext();
+        UsersContext uc = new UsersContext();
+
         static Random rnd = new Random();
 
 
@@ -28,10 +30,11 @@ namespace LyricsGame.Controllers
         }
 
         [HttpPost]
-        public ActionResult GameScreen(String flags, String segmentID, String entry, double startTime)
+        public ActionResult GameScreen(String flags, String segmentID, String entry, double startTime, String win)
         {
              int lyricSegID = 1;
-
+            UserProfile activeUser = uc.UserProfiles.FirstOrDefault(g => g.UserName.ToLower() == User.Identity.Name);
+   
             //Prevent breaking things if improper segmentID recieved
             try
             {
@@ -55,21 +58,40 @@ namespace LyricsGame.Controllers
                 if (nextSegCandidates.Count() != 0)
                 {
                     LyricSegment nextSegment = nextSegCandidates.First();
-                    inputProcessor.CutOff(segment, nextSegment);
+                    if (inputProcessor.CutOff(segment, nextSegment))
+                    {
+                        activeUser.Points += 2;
+                        ViewBag.Points = "+2";
+                    }
                 }
             }
-            else if (flags.Equals("NoLyrics"))
+            else if (flags.Equals("NoLyrics") || entry == "")
             {
-                inputProcessor.NoLyrics(segment);
+                if (inputProcessor.NoLyrics(segment))
+                {
+                    activeUser.Points += 2;
+                    ViewBag.Points = "+2";
+                }
             }
             else if (flags.Equals("Lyrics"))
             {
-                inputProcessor.Lyrics(segment, entry, startTime);
+                if (inputProcessor.Lyrics(segment, entry, startTime))
+                {
+                    activeUser.Points += 10;
+                    ViewBag.Points = "+10";
+                    if (win.Equals("true"))
+                    {
+                        activeUser.Points += 2;
+                        ViewBag.Bonus = "Speed Bonus: +2";
+                    }
+                }
             }
             sendSongSegment();
 
             TimeSpan now = DateTime.UtcNow - new DateTime(1970, 1, 1);
             ViewBag.StartTime = now.TotalSeconds;
+            uc.SaveChanges();
+            Ranks.UpdateRank(activeUser.UserName);
             
             return PartialView("GameScreen");
         }
@@ -126,7 +148,9 @@ namespace LyricsGame.Controllers
             //If player is first to guess lyrics for segment, half the points for the segment will automatically 
             //be added to user's points. Players are awarded points if they match segment in database
 
-            string specGenre = "Electro house";
+
+            string specGenre = "rock";
+
             //Create List of musicIDs from the genre specified by the User
             List<int> idList = db.Music.Where(g => g.Genre == specGenre).Select(mID => mID.MusicID).ToList();
             int idIndex = rnd.Next(idList.Count);
@@ -157,7 +181,7 @@ namespace LyricsGame.Controllers
                 ViewBag.Time = possibleUsers[userNum].Time;
             }
             else
-                ViewBag.Time = 15;
+                ViewBag.Time = 17;
 
         }
 

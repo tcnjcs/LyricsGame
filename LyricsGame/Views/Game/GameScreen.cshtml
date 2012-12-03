@@ -1,20 +1,23 @@
 ﻿<p id="statusText">Loading...</p>
     <p><font color="red">@ViewBag.Error</font></p>
     <div id="Player">
-        
+        <h2>@ViewBag.Points</h2>
+        <h3>@ViewBag.Bonus</h3>
         <button onclick="playClip()">Play</button>
         <button onclick="pauseClip()">Pause</button>
         <button onclick="restartClip()">Restart</button>
           
             <p>
-            <input type = "radio" name = "flags" id = "CutOff" onclick="updateField()" value = "CutOff"/>Cut Off<br />
-            <input type = "radio" name = "flags" id = "NoLyrics" onclick="updateField()" value = "NoLyrics"/>No Lyrics<br />
-            <input type = "radio" name = "flags" id = "Lyrics" onclick="updateField()" value = "Lyrics" checked = "checked"/>Input Lyrics:<br />
-            <input type=  "text"  name=  "entry" id = "entry" />  <input type= "password"  name= "enemyInput" id = "enemyInput" disabled = "true" />
+            <input type = "radio" name = "flags" id = "CutOff" onclick="updateField()" value = "CutOff"/> Cut Off<br />
+            <input type = "radio" name = "flags" id = "NoLyrics" onclick="updateField()" value = "NoLyrics"/> No Lyrics<br />
+            <input type = "radio" name = "flags" id = "Lyrics" onclick="updateField()" value = "Lyrics" checked = "checked"/> Input Lyrics:<br />
+            <input type=  "text"  name=  "entry" id = "entry" /> <input type= "text"  name= "enemyInput" id = "enemyInput" disabled= "true" style="font-style:italic; margin-left:50px" />
 
             <input type = "hidden" name = "musicID" id ="musicID" value = "@ViewBag.MusicID" />
             <input type = "hidden" name = "segmentID" id ="segmentID" value = "@ViewBag.SegmentID" />
             <input type = "hidden" name = "startTime" id="startTime" value = "@ViewBag.StartTime"/>
+            <input type = "hidden" name = "win" id="win" value = "true"/>
+
             </p>
             <input type="submit" onclick= "Submit()" value="Submit" />
 
@@ -48,6 +51,18 @@
                 audio.currentTime = '@ViewBag.Start';
                 audio.play();
                 document.getElementById("statusText").innerHTML = "";
+                document.getElementById("enemyInput").value = "Opponent Typing..";
+
+                var time = '@ViewBag.Time'
+                var interval = time * 1000;
+
+                var timer = setTimeout(
+                    function () {
+                        document.getElementById("enemyInput").value = "Opponent Submitted!";
+                        document.getElementById("win").value = "false";
+                    },
+                    interval
+                );
 
             }
             );
@@ -61,15 +76,6 @@
         function playClip() { audio.play(); }
         function pauseClip() { audio.pause(); }
         function restartClip() { audio.currentTime = '@ViewBag.Start'; audio.play(); }
-        
-        var time = '@ViewBag.Time'
-        var interval = (time / 15) * 1000;
-        var counter = 0;
-        var timer = setInterval(
-            function () {
-                document.getElementById("enemyInput").value += "*"; counter++; if (counter == 15) { clearInterval(timer); }
-            },
-        interval);
         
 
 

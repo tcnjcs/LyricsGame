@@ -13,15 +13,13 @@ namespace LyricsGame.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
-
             return View();
         }
 
         public ActionResult About()
         {
             ViewBag.Message = "Your app description page.";
-
+            
             return View();
         }
 
@@ -31,6 +29,51 @@ namespace LyricsGame.Controllers
 
             return View();
         }
+
+        public ActionResult Leaderboard()
+        {
+            var db = new UsersContext();
+            var profiles = db.UserProfiles;
+
+            var username = User.Identity.Name;
+            var user = from p in profiles
+                       where p.UserName == username
+                       select p;
+            var activeUser = user.FirstOrDefault();
+
+            List<UserProfile> results = (from p in profiles orderby p.Points descending select p).Take(10).ToList();
+            List<string> leaders = new List<string>();
+            List<int> points = new List<int>();
+            foreach (var result in results)
+            {
+                leaders.Add(result.UserName);
+                points.Add(result.Points);
+            }
+            ViewBag.leaders = leaders;
+            ViewBag.points = points;
+            if (activeUser != null)
+            {
+                ViewBag.myrank = activeUser.Rank;
+                ViewBag.mypoints = activeUser.Points;
+
+                string origrank = activeUser.Rank;
+                string currentRank = origrank;
+                int pointsTilNext = 0;
+                int myPoints = activeUser.Points;
+                while (currentRank == origrank)
+                {
+                    pointsTilNext++;
+                    currentRank = Ranks.GetRank(myPoints + pointsTilNext);
+                }
+                ViewBag.pointstogo = pointsTilNext;
+
+            }
+            
+            return PartialView("Leaderboard");
+        }
+
+
+
 
     }
 }

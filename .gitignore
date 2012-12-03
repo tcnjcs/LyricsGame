@@ -1,4 +1,5 @@
 *.suo
 *.jpg
+*.cache
 LyricsGame/obj/Debug/LyricsGame.dll
 LyricsGame/bin/LyricsGame.dll
