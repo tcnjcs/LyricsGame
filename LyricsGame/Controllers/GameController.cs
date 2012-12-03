@@ -56,7 +56,7 @@ namespace LyricsGame.Controllers
                     inputProcessor.CutOff(segment, nextSegment);
                 }
             }
-            else if (flags.Equals("NoLyrics"))
+            else if (flags.Equals("NoLyrics") || entry == "")
             {
                 inputProcessor.NoLyrics(segment);
             }
@@ -206,7 +206,7 @@ namespace LyricsGame.Controllers
                 ViewBag.Time = possibleUsers[userNum].Time;
             }
             else
-                ViewBag.Time = 15;
+                ViewBag.Time = 17;
 
         }
 
