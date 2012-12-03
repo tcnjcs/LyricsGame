@@ -5,6 +5,7 @@
 }
 
 <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+<script src="~/Scripts/LGScripts/BouncingBall.js" ></script>
 
 <style type="text/css">
     div.songselector {
@@ -46,6 +47,8 @@
 </style>
 
 <script type="text/javascript">
+    var songPath = "";
+    
     function songSelected(obj) {
         $("#title").text($(obj).text());
 
@@ -58,8 +61,12 @@
                 id
         },
         function (data) {
-            $(".songview").html(data);
+            $(".lyricsview").html(data);
         });
+    }
+
+    function setNewSong(path) {
+        player.src = path;
     }
 </script>
 
@@ -90,9 +97,17 @@
         </div>
     </div>
     <div class="songview">
-        <br /><br /><br /><br />
-        <h3>Select a song to view lyric segments for it.</h3>
+        <h1 id="title">Select a Song to begin etc.</h1>
+        <div style="overflow:hidden;">
+            <audio controls="controls" id="player"></audio>
+        </div>
+        <div class="lyricsview">
+
+        </div>
     </div>
 
 </div>
+
+
+
 

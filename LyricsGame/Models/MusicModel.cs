@@ -26,4 +26,6 @@ namespace LyricsGame.Models
         public DbSet<LyricsStats> LyricStats { get; set; }
         public DbSet<LyricsUser> LyricUsers { get; set; }
     }
+
+
 }

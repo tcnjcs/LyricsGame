@@ -12,6 +12,8 @@ namespace LyricsGame.Controllers
     {
 
         MusicDBContext db = new MusicDBContext();
+        static Random rnd = new Random();
+
 
         public ActionResult Index()
         {
@@ -54,7 +56,7 @@ namespace LyricsGame.Controllers
                     inputProcessor.CutOff(segment, nextSegment);
                 }
             }
-            else if (flags.Equals("NoLyrics"))
+            else if (flags.Equals("NoLyrics") || entry == "")
             {
                 inputProcessor.NoLyrics(segment);
             }
@@ -75,7 +77,6 @@ namespace LyricsGame.Controllers
         {
             int musicID = -1;
             
-
             try
             {
                 musicID = Int16.Parse(songID);
@@ -127,8 +128,7 @@ namespace LyricsGame.Controllers
             }
             ViewBag.MaxNumOfSegs = maxSeg;
 
-            DataTable dtStatIDs = new DataTable("StatIds");
-            DataTable dtLyrics = new DataTable("StatLyrics");
+            DataTable dt = new DataTable("StatLyrics");
 
             /*for (int i = 0; i < lyricSeg.Count; i++)
             {
@@ -137,23 +137,17 @@ namespace LyricsGame.Controllers
 
             foreach (LyricSegment ls in lyricSeg)
             {
-                dtLyrics.Columns.Add(new DataColumn(ls.LyricSegmentID.ToString(),typeof(string)));
-                dtStatIDs.Columns.Add(new DataColumn(ls.LyricSegmentID.ToString(), typeof(string)));
-                
+                dt.Columns.Add(new DataColumn(ls.LyricSegmentID.ToString(),typeof(string)));
                 IList<LyricsStats> lyStat = db.LyricStats.Where(lstat => lstat.LyricSegmentID == ls.LyricSegmentID).ToList();
                 int i = 0;
                 foreach (LyricsStats lys in lyStat)
                 {
-                    if (i >= dtLyrics.Rows.Count)
+                    if (i >= dt.Rows.Count)
                     {
-                        DataRow lyricsStatsRow = dtLyrics.NewRow();
-                        dtLyrics.Rows.Add(lyricsStatsRow);
-
-                        DataRow lyricsIdsRow = dtStatIDs.NewRow();
-                        dtStatIDs.Rows.Add(lyricsIdsRow);
+                        DataRow row = dt.NewRow();
+                        dt.Rows.Add(row);
                     }
-                    dtLyrics.Rows[i][ls.LyricSegmentID.ToString()] = lys.Lyrics;
-                    dtStatIDs.Rows[i][ls.LyricSegmentID.ToString()] = lys.LyricsStatsID;
+                    dt.Rows[i][ls.LyricSegmentID.ToString()] = lys.Lyrics;
                     i++;
                 }
             }
@@ -164,7 +158,7 @@ namespace LyricsGame.Controllers
                 dt.Rows.Add(row);
             }*/
 
-            return PartialView("ResultSongPossibleLyrics", dtLyrics);
+            return PartialView("ResultSongPossibleLyrics", dt);
         }
 
         public ActionResult Results()
@@ -181,8 +175,11 @@ namespace LyricsGame.Controllers
             //If player is first to guess lyrics for segment, half the points for the segment will automatically 
             //be added to user's points. Players are awarded points if they match segment in database
 
-            //Temporary find song with ID and use it as chosen song
-            int musicID = 1;
+            string specGenre = "genre";
+            //Create List of musicIDs from the genre specified by the User
+            List<int> idList = db.Music.Where(g => g.Genre == specGenre).Select(mID => mID.MusicID).ToList();
+            int idIndex = rnd.Next(idList.Count);
+            int musicID = idList[idIndex];
 
             Music song = db.Music.Find(musicID);
             ViewBag.MusicID = musicID;
@@ -201,6 +198,35 @@ namespace LyricsGame.Controllers
             //Pull start and end times of chosen segment
             ViewBag.Start = segments[selection].Start;
             ViewBag.End = segments[selection].End;
+
+            List<LyricsUser> possibleUsers = segments[selection].LyricUsers.ToList();
+            if (possibleUsers.Count != 0)
+            {
+                int userNum = new Random().Next(0, possibleUsers.Count);
+                ViewBag.Time = possibleUsers[userNum].Time;
+            }
+            else
+                ViewBag.Time = 17;
+
         }
+
+        public ActionResult GenreSelector()
+        {
+            ViewBag.Message = "";
+            var Genres = db.Music.Select(g => g.Genre).Distinct().ToList();
+            ViewBag.Genres = Genres;
+
+            return View(Genres);
+        }
+
+        [HttpPost]
+        public ActionResult GenreSelector(string selectedGenre)
+        {
+            ViewBag.Message = "";
+
+            return View();
+        }
+
+
     }
 }
