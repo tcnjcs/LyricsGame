@@ -15,22 +15,18 @@ namespace LyricsGame.Controllers
 
         public ActionResult Index()
         {
-            return View();
-        }
-        public ActionResult GameScreen()
-        {
+            ViewBag.Partial = "GameScreen";
             sendSongSegment();
 
             TimeSpan now = DateTime.UtcNow - new DateTime(1970, 1, 1);
             ViewBag.StartTime = now.TotalSeconds;
-
-            return PartialView();
+            return View();
         }
 
         [HttpPost]
-        public ActionResult Index(String flags, String segmentID, String input, double startTime)
+        public ActionResult GameScreen(String flags, String segmentID, String entry, double startTime)
         {
-            int lyricSegID = 1;
+             int lyricSegID = 1;
 
             //Prevent breaking things if improper segmentID recieved
             try
@@ -64,11 +60,14 @@ namespace LyricsGame.Controllers
             }
             else if (flags.Equals("Lyrics"))
             {
-                inputProcessor.Lyrics(segment, input, startTime);
+                inputProcessor.Lyrics(segment, entry, startTime);
             }
+            sendSongSegment();
 
+            TimeSpan now = DateTime.UtcNow - new DateTime(1970, 1, 1);
+            ViewBag.StartTime = now.TotalSeconds;
             
-            return View("Results", db.Music.ToList());
+            return PartialView("GameScreen");
         }
 
         [HttpPost]
