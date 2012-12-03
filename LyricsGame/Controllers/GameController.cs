@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using LyricsGame.Models;
 using System.Data;
+using System.Web.Script.Serialization;
+using System.Dynamic;
 
 namespace LyricsGame.Controllers
 {
@@ -93,31 +95,10 @@ namespace LyricsGame.Controllers
             ViewBag.FilePath = song.FilePath;
             ViewBag.Title = song.Title;
             ViewBag.Artist = song.Artist;
-
-            return PartialView("SelectedResultSong", db.Lyrics.Where(ls => ls.MusicID == musicID));
-        }
-
-        [HttpPost]
-        public ActionResult ResultSongPossibleLyrics(String songID)
-        {
-            int musicID = -1;
-
-            try
-            {
-                musicID = Int16.Parse(songID);
-            }
-            catch (Exception e)
-            {
-                Response.StatusCode = 500;
-                Response.StatusDescription = "The selected song has been moved or deleted. Please return to the home page and start a new round.";
-                return null;
-            }
-
-            Music song = db.Music.Find(musicID);
-            IList<LyricSegment> lyricSeg = song.Lyrics.ToList();
-            ViewBag.SegNum = lyricSeg.Count;
+            ViewBag.SegCount = song.Lyrics.Count;
+            
             int maxSeg = 0;
-
+            IList<LyricSegment> lyricSeg = song.Lyrics.ToList();
             foreach (LyricSegment ls in lyricSeg)
             {
                 IList<LyricsStats> lyStat = db.LyricStats.Where(lstat => lstat.LyricSegmentID == ls.LyricSegmentID).ToList();
@@ -128,37 +109,7 @@ namespace LyricsGame.Controllers
             }
             ViewBag.MaxNumOfSegs = maxSeg;
 
-            DataTable dt = new DataTable("StatLyrics");
-
-            /*for (int i = 0; i < lyricSeg.Count; i++)
-            {
-                dt.Columns.Add(new DataColumn(i.ToString(),typeof(string)));
-            }*/
-
-            foreach (LyricSegment ls in lyricSeg)
-            {
-                dt.Columns.Add(new DataColumn(ls.LyricSegmentID.ToString(),typeof(string)));
-                IList<LyricsStats> lyStat = db.LyricStats.Where(lstat => lstat.LyricSegmentID == ls.LyricSegmentID).ToList();
-                int i = 0;
-                foreach (LyricsStats lys in lyStat)
-                {
-                    if (i >= dt.Rows.Count)
-                    {
-                        DataRow row = dt.NewRow();
-                        dt.Rows.Add(row);
-                    }
-                    dt.Rows[i][ls.LyricSegmentID.ToString()] = lys.Lyrics;
-                    i++;
-                }
-            }
-
-            /*for (int i = 0; i < maxSeg; i++)
-            {
-                DataRow row = dt.NewRow();
-                dt.Rows.Add(row);
-            }*/
-
-            return PartialView("ResultSongPossibleLyrics", dt);
+            return PartialView("SelectedResultSong", db.Lyrics.Where(ls => ls.MusicID == musicID));
         }
 
         public ActionResult Results()
@@ -175,7 +126,7 @@ namespace LyricsGame.Controllers
             //If player is first to guess lyrics for segment, half the points for the segment will automatically 
             //be added to user's points. Players are awarded points if they match segment in database
 
-            string specGenre = "genre";
+            string specGenre = "Electro house";
             //Create List of musicIDs from the genre specified by the User
             List<int> idList = db.Music.Where(g => g.Genre == specGenre).Select(mID => mID.MusicID).ToList();
             int idIndex = rnd.Next(idList.Count);
@@ -225,6 +176,46 @@ namespace LyricsGame.Controllers
             ViewBag.Message = "";
 
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult GetLyricsForSong(String songID)
+        {
+            int musicID = -1;
+
+            try
+            {
+                musicID = Int16.Parse(songID);
+            }
+            catch (Exception e)
+            {
+                Response.StatusCode = 500;
+                Response.StatusDescription = "The selected song has been moved or deleted. Please return to the home page and start a new round.";
+                return null;
+            }
+
+            Music song = db.Music.Find(musicID);
+            IList<LyricSegment> lyricSegs = song.Lyrics.ToList();
+
+            var ret = new Dictionary<string, Dictionary<string, string>>{};
+
+            foreach (LyricSegment ls in lyricSegs)
+            {
+                IList<LyricsStats> lyStat = db.LyricStats.Where(lsStat => lsStat.LyricSegmentID == ls.LyricSegmentID).ToList();
+                Dictionary<string, string> d = new Dictionary<string, string>{};
+                foreach (LyricsStats lys in lyStat)
+                {
+                    if (lys.Available)
+                    {
+                        //d.Add(lys.LyricsStatsID.ToString(), lys.Lyrics);
+                        //uncomment the above line and comment the below lin in order to only see "available" lystats.
+                    }
+                    d.Add(lys.LyricsStatsID.ToString(), lys.Lyrics);
+                }
+                ret.Add(ls.LyricSegmentID.ToString(), d);
+            }
+
+            return Json(ret);
         }
 
 

@@ -335,7 +335,6 @@
     <Content Include="Views\Music\Edit.cshtml" />
     <Content Include="Views\Music\Delete.cshtml" />
     <Content Include="Views\Game\SelectedResultSong.cshtml" />
-    <Content Include="Views\Game\ResultSongPossibleLyrics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
