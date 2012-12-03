@@ -12,6 +12,8 @@ namespace LyricsGame.Controllers
     {
 
         MusicDBContext db = new MusicDBContext();
+        static Random rnd = new Random();
+
 
         public ActionResult Index()
         {
@@ -75,7 +77,6 @@ namespace LyricsGame.Controllers
         {
             int musicID = -1;
             
-
             try
             {
                 musicID = Int16.Parse(songID);
@@ -174,8 +175,11 @@ namespace LyricsGame.Controllers
             //If player is first to guess lyrics for segment, half the points for the segment will automatically 
             //be added to user's points. Players are awarded points if they match segment in database
 
-            //Temporary find song with ID and use it as chosen song
-            int musicID = 1;
+            string specGenre = "genre";
+            //Create List of musicIDs from the genre specified by the User
+            List<int> idList = db.Music.Where(g => g.Genre == specGenre).Select(mID => mID.MusicID).ToList();
+            int idIndex = rnd.Next(idList.Count);
+            int musicID = idList[idIndex];
 
             Music song = db.Music.Find(musicID);
             ViewBag.MusicID = musicID;
@@ -202,8 +206,27 @@ namespace LyricsGame.Controllers
                 ViewBag.Time = possibleUsers[userNum].Time;
             }
             else
-                ViewBag.Time = 6;
+                ViewBag.Time = 15;
 
         }
+
+        public ActionResult GenreSelector()
+        {
+            ViewBag.Message = "";
+            var Genres = db.Music.Select(g => g.Genre).Distinct().ToList();
+            ViewBag.Genres = Genres;
+
+            return View(Genres);
+        }
+
+        [HttpPost]
+        public ActionResult GenreSelector(string selectedGenre)
+        {
+            ViewBag.Message = "";
+
+            return View();
+        }
+
+
     }
 }
