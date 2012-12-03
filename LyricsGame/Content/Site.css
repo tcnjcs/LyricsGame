@@ -63,6 +63,14 @@ body
         color: #ffffff;
         font-size: 1.1em;
     }
+    #sidebar a {
+        color: #ffffff;
+    }
+    #sidebar a:link, a:visited,
+    a:active, a:hover
+    {
+        color: #ffffff;
+    }
 
 #container
 {
@@ -74,7 +82,7 @@ body
 
 a
 {
-    color: #333;
+    color: #3B5BA5;
     outline: none;
     padding-left: 3px;
     padding-right: 3px;
@@ -84,7 +92,7 @@ a
     a:link, a:visited,
     a:active, a:hover
     {
-        color: #333;
+        color: #3B5BA5;
     }
 
     a:hover
@@ -282,7 +290,7 @@ footer
 ----------------------------------------------------------*/
 .site-title
 {
-    color: #c8c8c8;
+    color: #3B5BA5;
     font-family: Rockwell, Consolas, "Courier New", Courier, monospace;
     font-size: 2.3em;
     margin: 0;
@@ -291,7 +299,7 @@ footer
     .site-title a, .site-title a:hover, .site-title a:active
     {
         background: none;
-        color: #c8c8c8;
+        color: #3B5BA5;
         outline: none;
         text-decoration: none;
     }

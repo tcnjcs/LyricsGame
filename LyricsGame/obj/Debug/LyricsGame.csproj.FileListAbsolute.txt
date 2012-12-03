@@ -180,3 +180,4 @@ C:\LyricsGame2\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.musicComple
 C:\LyricsGame2\LyricsGame\LyricsGame\obj\Debug\LyricsGame.csproj.GenerateResource.Cache
 C:\LyricsGame2\LyricsGame\LyricsGame\obj\Debug\LyricsGame.dll
 C:\LyricsGame2\LyricsGame\LyricsGame\obj\Debug\LyricsGame.pdb
+C:\LyricsGame2\LyricsGame\LyricsGame\obj\Debug\LyricsGame.csprojResolveAssemblyReference.cache

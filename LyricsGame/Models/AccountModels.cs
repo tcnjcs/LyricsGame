@@ -33,7 +33,30 @@ namespace LyricsGame.Models
         public string Picture { get; set; }
     }
 
+    public class Ranks
+    {
+        public string GetRank(int points)
+        {
+            if (points >= 0)
+                return "Loser";
+            
+            if (points >= 50)
+                return "Not a loser";
 
+            if (points >= 100)
+                return "Aiight";
+
+            if (points >= 500)
+                return "Funk Master Flex";
+
+            if (points >= 1000)
+                return "Master Lyricist";
+
+
+            return "Unranked";
+        }
+
+    }
     public class RegisterExternalLoginModel
     {
         [Required]

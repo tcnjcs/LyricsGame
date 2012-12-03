@@ -175,7 +175,7 @@ namespace LyricsGame.Controllers
             //If player is first to guess lyrics for segment, half the points for the segment will automatically 
             //be added to user's points. Players are awarded points if they match segment in database
 
-            string specGenre = "genre";
+            string specGenre = "rock";
             //Create List of musicIDs from the genre specified by the User
             List<int> idList = db.Music.Where(g => g.Genre == specGenre).Select(mID => mID.MusicID).ToList();
             int idIndex = rnd.Next(idList.Count);
