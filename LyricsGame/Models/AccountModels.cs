@@ -25,7 +25,14 @@ namespace LyricsGame.Models
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
         public string UserName { get; set; }
+        public int Points { get; set; }
+        public string Rank { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string ActiveGenre { get; set; }
+        public string Picture { get; set; }
     }
+
 
     public class RegisterExternalLoginModel
     {
@@ -87,11 +94,21 @@ namespace LyricsGame.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
-
+    public class FacebookRegisterModel
+    {
+        public string fbLogin { get; set; }
+        public string fbFirst_Name { get; set; }
+        public string fbLast_Name { get; set; }
+        public string fbProfPic { get; set; }
+    }
     public class ExternalLogin
     {
         public string Provider { get; set; }
         public string ProviderDisplayName { get; set; }
         public string ProviderUserId { get; set; }
+        public string fbLogin { get; set; }
+        public string fbFirst_Name { get; set; }
+        public string fbLast_Name { get; set; }
+        public string fbProfPic { get; set; }
     }
 }

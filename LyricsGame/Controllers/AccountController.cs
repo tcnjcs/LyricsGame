@@ -5,11 +5,15 @@ using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
+using DotNetOpenAuth.OAuth2;
 using WebMatrix.WebData;
 using LyricsGame.Filters;
 using LyricsGame.Models;
+using System.Net;
+using DotNetOpenAuth.ApplicationBlock;
+using System.Configuration;
+using DotNetOpenAuth.AspNet;
 
 namespace LyricsGame.Controllers
 {
@@ -17,9 +21,58 @@ namespace LyricsGame.Controllers
     [InitializeSimpleMembership]
     public class AccountController : Controller
     {
+        private static readonly FacebookClient _FBClient = new FacebookClient
+        {
+            ClientIdentifier = ConfigurationManager.AppSettings["FBAppID"],
+            ClientCredentialApplicator = ClientCredentialApplicator.PostParameter(ConfigurationManager.AppSettings["FBAppSecret"])
+        };
+
+        [AllowAnonymous]
+        public ActionResult FacebookOAuth()
+        {
+            var scope = new List<string>();
+            scope.Add("email");
+
+            string graphURL = "https://graph.facebook.com/me?fields=email,first_name,last_name,username&access_token=";
+
+            _FBClient.PrepareRequestUserAuthorization(scope, null);
+
+            IAuthorizationState authorization = _FBClient.ProcessUserAuthorization();
+
+            if (authorization == null)
+            {
+                _FBClient.RequestUserAuthorization(scope);
+                authorization = _FBClient.ProcessUserAuthorization();
+            }
+            else
+            {
+                var request = WebRequest.Create(graphURL + Uri.EscapeDataString(authorization.AccessToken));
+                using (var response = request.GetResponse())
+                {
+                    using (var responseStream = response.GetResponseStream())
+                    {
+                        var graph = FacebookGraph.Deserialize(responseStream);
+                        var profilePicURL = "https://graph.facebook.com/" + graph.UserName + "/picture";
+
+                        ExternalLogin logindata = new ExternalLogin
+                        {
+                            fbFirst_Name = graph.FirstName,
+                            fbLast_Name = graph.LastName,
+                            fbLogin = graph.UserName,
+                            fbProfPic = profilePicURL,
+                            ProviderDisplayName = graph.FirstName,
+                            Provider = "Facebook",
+                            ProviderUserId = graph.UserName
+                        };
+                        return RedirectToAction("ExternalLoginConfirmation", logindata);
+                    }
+                }
+            }
+            //Error
+            return RedirectToAction("Home");
+        }
         // 
         // GET: /Account/Login
-
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -56,6 +109,9 @@ namespace LyricsGame.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+
+
 
         //
         // GET: /Account/Register
@@ -270,7 +326,7 @@ namespace LyricsGame.Controllers
                     if (user == null)
                     {
                         // Insert name into the profile table
-                        db.UserProfiles.Add(new UserProfile { UserName = model.UserName });
+                        db.UserProfiles.Add(new UserProfile { UserName = model.UserName, Rank = "Loser", Points = 0 });
                         db.SaveChanges();
 
                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);
@@ -298,6 +354,7 @@ namespace LyricsGame.Controllers
         {
             return View();
         }
+
 
         [AllowAnonymous]
         [ChildActionOnly]

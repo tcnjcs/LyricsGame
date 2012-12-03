@@ -22,9 +22,9 @@ namespace LyricsGame
             //    consumerKey: "",
             //    consumerSecret: "");
 
-            //OAuthWebSecurity.RegisterFacebookClient(
-            //    appId: "",
-            //    appSecret: "");
+            OAuthWebSecurity.RegisterFacebookClient(
+                appId: "485105974853614",
+                appSecret: "796f2aa3f9091c5c133e466e7db00416");
 
             //OAuthWebSecurity.RegisterGoogleClient();
         }
