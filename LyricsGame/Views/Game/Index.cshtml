@@ -7,18 +7,28 @@
     <h2>@ViewBag.Message</h2>
 </hgroup>
 
-<article>
-    
-</article>
+    <div id="content">
+        @Html.Partial("GameScreen")
+    </div>
+    <script>
+        function Submit() {
+            var chkdRB = $("[name='flags']:checked").val();
+            pauseClip();
+            $.post('@Url.Action("GameScreen", "Game")', {
+                flags:
+                    chkdRB,
+                segmentID:
+                    document.getElementById('segmentID').value,
+                entry:
+                    document.getElementById('entry').value,
+                startTime:
+                    document.getElementById('startTime').value
+            },
+            function (data) {
+                $("#content").html(data);
+            });
+        }
 
-<aside>
-    <h3>Aside Title</h3>
-    <p>
-        Use this area to provide additional information.
-    </p>
-    <ul>
-        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-        <li>@Html.ActionLink("About", "About", "Home")</li>
-        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-    </ul>
-</aside>
+    </script>
+    
+

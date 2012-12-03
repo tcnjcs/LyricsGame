@@ -118,5 +118,3 @@ C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\D
 C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.musicComplete.resources
 C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\obj\Debug\LyricsGame.Migrations.lyricsinStats.resources
 C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\obj\Debug\LyricsGame.Migrations.musicComplete.resources
-C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.addAvailableToStat.resources
-C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.removeCount.resources
