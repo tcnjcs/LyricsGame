@@ -15,7 +15,6 @@ namespace LyricsGame.Models
         }
         public bool CutOff(LyricSegment segment, LyricSegment nextSegment)
         {
-                
             bool match = false;
             if (segment.CutOffCount != 0)
                 match = true;
@@ -60,7 +59,7 @@ namespace LyricsGame.Models
             return match;
         }
 
-        public bool Lyrics(LyricSegment segment, String input, double startTime)
+        public bool Lyrics(LyricSegment segment, String input, double startTime, UserProfile activeUser)
         {
             int userID = 0;
             TimeSpan now = DateTime.UtcNow - new DateTime(1970, 1, 1);
@@ -97,7 +96,7 @@ namespace LyricsGame.Models
                 {
                     lyricStatEntries[i].Votes++; //increase votes for this submission
                     userSub = lyricStatEntries[i];
-                    newInput = false; //the users submission was already in the table
+                    newInput = false; //the users submission was already in the table                    
                 }
 
                 //Is the analyzed input the top submission
@@ -120,6 +119,8 @@ namespace LyricsGame.Models
                 newEntry.Votes = 1;
                 userSub = newEntry;
                 db.LyricStats.Add(newEntry);
+
+
             }
             //If the user's submission is already in a table check if the segment is complete
             else
@@ -141,8 +142,23 @@ namespace LyricsGame.Models
                         match = true;
 
                 }
+                
             }
-            
+
+            List<UserSegmentVotes> otherVote = db.UserSegmentVotes.Where(us => us.LyricSegmentID == segment.LyricSegmentID).ToList();
+            if (otherVote.Count() == 0)
+            {
+                UserSegmentVotes newEntryUser = new UserSegmentVotes();
+                newEntryUser.LyricSegmentID = segment.LyricSegmentID;
+                newEntryUser.LyricsStatsID = userSub.LyricsStatsID;
+                newEntryUser.UserID = activeUser.UserId;
+                db.UserSegmentVotes.Add(newEntryUser);
+            }
+            else
+            {
+                otherVote.First().LyricsStatsID = userSub.LyricsStatsID;
+            }
+
             //Mark all lyricstats meeting threshold as available to be voted on
             for (int i = 0; i < lyricStatEntries.Count(); i++)
             {
