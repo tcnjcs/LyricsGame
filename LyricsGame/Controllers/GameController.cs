@@ -16,7 +16,7 @@ namespace LyricsGame.Controllers
 
         static Random rnd = new Random();
 
-
+        [Authorize]
         public ActionResult Index()
         {
             ViewBag.Partial = "GameScreen";
