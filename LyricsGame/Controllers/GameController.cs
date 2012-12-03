@@ -10,6 +10,7 @@ using System.Dynamic;
 
 namespace LyricsGame.Controllers
 {
+    [Authorize]
     public class GameController : Controller
     {
 
