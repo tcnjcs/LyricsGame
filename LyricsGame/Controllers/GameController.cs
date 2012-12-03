@@ -11,14 +11,17 @@ namespace LyricsGame.Controllers
     {
 
         MusicDBContext db = new MusicDBContext();
+        static Random rnd = new Random();
 
         public ActionResult Index()
         {
             //If player is first to guess lyrics for segment, half the points for the segment will automatically 
             //be added to user's points. Players are awarded points if they match segment in database
-
-            //Temporary find song with ID and use it as chosen song
-            int musicID = 24;
+            string specGenre = "rock";
+            //Create List of musicIDs from the genre specified by the User
+            List<int> idList = db.Music.Where(g => g.Genre == specGenre).Select(mID => mID.MusicID).ToList();
+            int idIndex = rnd.Next(idList.Count);
+            int musicID = idList[idIndex];
 
             Music song = db.Music.Find(musicID);
             ViewBag.MusicID = musicID;
@@ -124,12 +127,51 @@ namespace LyricsGame.Controllers
             return PartialView("SelectedResultSong", db.Lyrics.Where(ls => ls.MusicID == musicID));
         }
 
+
         public ActionResult Results()
         {
             ViewBag.Message = "";
 
             return View(db.Music.ToList());
         }
+
+       
+        public ActionResult GenreSelector()
+        {
+
+            //var janrahs = db.Music.Select(g => g.Genre).Distinct().ToList();
+            //int i = 0;
+            //string val;
+            //var genres = new List<SelectListItem>();
+
+            //foreach (string j in janrahs)
+            //{
+            //    i++;
+            //    val = i.ToString();
+            //    genres.Add(new SelectListItem()
+            //    {
+            //        Text = j,
+            //        Value = val,
+            //        Selected = false
+            //    });
+            //
+
+            ViewBag.Message = "";
+            var Genres = db.Music.Select(g => g.Genre).Distinct().ToList();
+            ViewBag.Genres = Genres;
+
+            return View(Genres);
+
+        }
+
+        [HttpPost]
+        public ActionResult GenreSelector(string selectedGenre)
+        {
+            ViewBag.Message = "";
+
+            return View();
+        }
+
 
     }
 }

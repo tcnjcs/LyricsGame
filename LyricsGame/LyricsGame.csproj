@@ -46,9 +46,6 @@
     <Reference Include="Microsoft.WindowsAPICodePack.Shell">
       <HintPath>..\packages\WindowsAPICodePack\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
     </Reference>
-    <Reference Include="policy.2.0.taglib-sharp">
-      <HintPath>..\packages\Taglib\policy.2.0.taglib-sharp.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -119,9 +116,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="taglib-sharp">
-      <HintPath>..\packages\TagLib\taglib-sharp.dll</HintPath>
-    </Reference>
     <Reference Include="WebMatrix.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.Data.2.0.20710.0\lib\net40\WebMatrix.Data.dll</HintPath>
@@ -177,6 +171,7 @@
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MusicController.cs" />
+    <Compile Include="Controllers\SelectList.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -192,6 +187,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\FlagHandler.cs" />
+    <Compile Include="Models\GenreHandler.cs" />
     <Compile Include="Models\LyricSegmentModel.cs" />
     <Compile Include="Models\MusicModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -310,6 +306,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Game\Error.cshtml" />
     <Content Include="Views\Game\Results.cshtml" />
+    <Content Include="Views\Game\GenreSelector.cshtml" />
     <None Include="Views\Game\Index.cshtml" />
     <Content Include="Views\Music\Index.cshtml" />
     <Content Include="Views\Music\Details.cshtml" />
