@@ -12,6 +12,8 @@ namespace LyricsGame.Controllers
     {
 
         MusicDBContext db = new MusicDBContext();
+        UsersContext uc = new UsersContext();
+
         static Random rnd = new Random();
 
 
@@ -26,10 +28,11 @@ namespace LyricsGame.Controllers
         }
 
         [HttpPost]
-        public ActionResult GameScreen(String flags, String segmentID, String entry, double startTime)
+        public ActionResult GameScreen(String flags, String segmentID, String entry, double startTime, String win)
         {
              int lyricSegID = 1;
-
+            UserProfile activeUser = uc.UserProfiles.FirstOrDefault(g => g.UserName.ToLower() == User.Identity.Name);
+   
             //Prevent breaking things if improper segmentID recieved
             try
             {
@@ -53,16 +56,33 @@ namespace LyricsGame.Controllers
                 if (nextSegCandidates.Count() != 0)
                 {
                     LyricSegment nextSegment = nextSegCandidates.First();
-                    inputProcessor.CutOff(segment, nextSegment);
+                    if (inputProcessor.CutOff(segment, nextSegment))
+                    {
+                        activeUser.Points += 2;
+                        ViewBag.Points = "+2";
+                    }
                 }
             }
             else if (flags.Equals("NoLyrics") || entry == "")
             {
-                inputProcessor.NoLyrics(segment);
+                if (inputProcessor.NoLyrics(segment))
+                {
+                    activeUser.Points += 2;
+                    ViewBag.Points = "+2";
+                }
             }
             else if (flags.Equals("Lyrics"))
             {
-                inputProcessor.Lyrics(segment, entry, startTime);
+                if (inputProcessor.Lyrics(segment, entry, startTime))
+                {
+                    activeUser.Points += 10;
+                    ViewBag.Points = "+10";
+                    if (win.Equals("true"))
+                    {
+                        activeUser.Points += 2;
+                        ViewBag.Bonus = "Speed Bonus: +2";
+                    }
+                }
             }
             sendSongSegment();
 
