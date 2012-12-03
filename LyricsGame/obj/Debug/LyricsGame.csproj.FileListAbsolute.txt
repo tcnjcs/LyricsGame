@@ -181,3 +181,5 @@ C:\LyricsGame2\LyricsGame\LyricsGame\obj\Debug\LyricsGame.csproj.GenerateResourc
 C:\LyricsGame2\LyricsGame\LyricsGame\obj\Debug\LyricsGame.dll
 C:\LyricsGame2\LyricsGame\LyricsGame\obj\Debug\LyricsGame.pdb
 C:\LyricsGame2\LyricsGame\LyricsGame\obj\Debug\LyricsGame.csprojResolveAssemblyReference.cache
+C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\bin\DotNetOpenAuth.pdb
+C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\bin\DotNetOpenAuth.xml
