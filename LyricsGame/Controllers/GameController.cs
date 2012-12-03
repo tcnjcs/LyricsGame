@@ -128,7 +128,8 @@ namespace LyricsGame.Controllers
             }
             ViewBag.MaxNumOfSegs = maxSeg;
 
-            DataTable dt = new DataTable("StatLyrics");
+            DataTable dtStatIDs = new DataTable("StatIds");
+            DataTable dtLyrics = new DataTable("StatLyrics");
 
             /*for (int i = 0; i < lyricSeg.Count; i++)
             {
@@ -137,17 +138,23 @@ namespace LyricsGame.Controllers
 
             foreach (LyricSegment ls in lyricSeg)
             {
-                dt.Columns.Add(new DataColumn(ls.LyricSegmentID.ToString(),typeof(string)));
+                dtLyrics.Columns.Add(new DataColumn(ls.LyricSegmentID.ToString(),typeof(string)));
+                dtStatIDs.Columns.Add(new DataColumn(ls.LyricSegmentID.ToString(), typeof(string)));
+                
                 IList<LyricsStats> lyStat = db.LyricStats.Where(lstat => lstat.LyricSegmentID == ls.LyricSegmentID).ToList();
                 int i = 0;
                 foreach (LyricsStats lys in lyStat)
                 {
-                    if (i >= dt.Rows.Count)
+                    if (i >= dtLyrics.Rows.Count)
                     {
-                        DataRow row = dt.NewRow();
-                        dt.Rows.Add(row);
+                        DataRow lyricsStatsRow = dtLyrics.NewRow();
+                        dtLyrics.Rows.Add(lyricsStatsRow);
+
+                        DataRow lyricsIdsRow = dtStatIDs.NewRow();
+                        dtStatIDs.Rows.Add(lyricsIdsRow);
                     }
-                    dt.Rows[i][ls.LyricSegmentID.ToString()] = lys.Lyrics;
+                    dtLyrics.Rows[i][ls.LyricSegmentID.ToString()] = lys.Lyrics;
+                    dtStatIDs.Rows[i][ls.LyricSegmentID.ToString()] = lys.LyricsStatsID;
                     i++;
                 }
             }
@@ -158,7 +165,7 @@ namespace LyricsGame.Controllers
                 dt.Rows.Add(row);
             }*/
 
-            return PartialView("ResultSongPossibleLyrics", dt);
+            return PartialView("ResultSongPossibleLyrics", dtLyrics);
         }
 
         public ActionResult Results()
