@@ -24,18 +24,18 @@
         
 <div id="container">
         <ul id="nav">
-            
-<li class="header"><a href="http://www.tcnj.edu">Home</a></li>
+           
 
 <li class="header" style="position: relative;">
-<a href="http://www.tcnj.edu">Play</a></li>
-
+@Html.ActionLink("Home", "Index", "Home")</li>
 <li class="header" style="position: relative;">
-<a href="http://www.tcnj.edu">Upload Songs</a>
+@Html.ActionLink("PLAY", "Index", "Game")</li>
+<li class="header" style="position: relative;">
+@Html.ActionLink("Upload Music", "Create", "Music")
 </li>
 
 <li class="header" style="position: relative;">
-<a href="http://www.tcnj.edul">Browse Lyrics</a>
+@Html.ActionLink("Browse Lyrics", "Results", "Game")
 </li>
 
 <li class="header" style="position: relative;">

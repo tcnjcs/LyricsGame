@@ -1,0 +1,7 @@
+﻿<h2>Leaderboard</h2>
+<ol>
+    @for (var i = 0; i < ViewBag.leaders.Count; i++)
+    {
+        <li>@ViewBag.leaders[i] , Points: @ViewBag.points[i]</li>
+    } 
+</ol>

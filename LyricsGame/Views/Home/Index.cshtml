@@ -13,17 +13,11 @@
     }
     else
     {
-
+        <text><h2>You are not logged in.</h2></text>
     }
-    <h2>Leaderboard</h2>
-    <ol>
-        <li>Leader</li>
-        <li>Leader</li>
-        <li>Leader</li>
-        <li>Leader</li>
-        <li>Leader</li>
-        <li>Leader</li>
-    </ol>
+
+    @{Html.RenderAction("Leaderboard", "Home");}
+    
     <hr>
 </div>
 

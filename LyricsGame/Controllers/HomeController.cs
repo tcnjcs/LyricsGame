@@ -13,15 +13,13 @@ namespace LyricsGame.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
-
             return View();
         }
 
         public ActionResult About()
         {
             ViewBag.Message = "Your app description page.";
-
+            
             return View();
         }
 
@@ -31,6 +29,24 @@ namespace LyricsGame.Controllers
 
             return View();
         }
+
+        public ActionResult Leaderboard()
+        {
+            var db = new UsersContext();
+            var profiles = db.UserProfiles;
+            List<UserProfile> results = (from p in profiles orderby p.Points descending select p).Take(5).ToList();
+            List<string> leaders = new List<string>();
+            List<int> points = new List<int>();
+            foreach (var result in results)
+            {
+                leaders.Add(result.UserName);
+                points.Add(result.Points);
+            }
+            ViewBag.leaders = leaders;
+            ViewBag.points = points;
+            return PartialView("Leaderboard");
+        }
+
 
     }
 }
