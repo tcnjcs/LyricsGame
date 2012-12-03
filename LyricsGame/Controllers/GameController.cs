@@ -194,6 +194,16 @@ namespace LyricsGame.Controllers
             //Pull start and end times of chosen segment
             ViewBag.Start = segments[selection].Start;
             ViewBag.End = segments[selection].End;
+
+            List<LyricsUser> possibleUsers = segments[selection].LyricUsers.ToList();
+            if (possibleUsers.Count != 0)
+            {
+                int userNum = new Random().Next(0, possibleUsers.Count);
+                ViewBag.Time = possibleUsers[userNum].Time;
+            }
+            else
+                ViewBag.Time = 6;
+
         }
     }
 }
