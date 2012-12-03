@@ -63,6 +63,8 @@ namespace LyricsGame.Controllers
                         activeUser.Points += 2;
                         ViewBag.Points = "+2";
                     }
+                    else
+                        ViewBag.Points = "Sorry, answers did not match";
                 }
             }
             else if (flags.Equals("NoLyrics") || entry == "")
@@ -72,10 +74,12 @@ namespace LyricsGame.Controllers
                     activeUser.Points += 2;
                     ViewBag.Points = "+2";
                 }
+                else
+                    ViewBag.Points = "Sorry, answers did not match";
             }
             else if (flags.Equals("Lyrics"))
             {
-                if (inputProcessor.Lyrics(segment, entry, startTime))
+                if (inputProcessor.Lyrics(segment, entry, startTime, activeUser))
                 {
                     activeUser.Points += 10;
                     ViewBag.Points = "+10";
@@ -85,12 +89,14 @@ namespace LyricsGame.Controllers
                         ViewBag.Bonus = "Speed Bonus: +2";
                     }
                 }
+                else
+                    ViewBag.Points = "Sorry, your answers did not match";
             }
             sendSongSegment();
-
             TimeSpan now = DateTime.UtcNow - new DateTime(1970, 1, 1);
             ViewBag.StartTime = now.TotalSeconds;
             uc.SaveChanges();
+
             Ranks.UpdateRank(activeUser.UserName);
             
             return PartialView("GameScreen");
@@ -147,9 +153,7 @@ namespace LyricsGame.Controllers
         {
             //If player is first to guess lyrics for segment, half the points for the segment will automatically 
             //be added to user's points. Players are awarded points if they match segment in database
-
-
-            string specGenre = "rock";
+            string specGenre = "genre";
 
             //Create List of musicIDs from the genre specified by the User
             List<int> idList = db.Music.Where(g => g.Genre == specGenre).Select(mID => mID.MusicID).ToList();
