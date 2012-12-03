@@ -180,3 +180,5 @@ C:\LyricsGame2\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.musicComple
 C:\LyricsGame2\LyricsGame\LyricsGame\obj\Debug\LyricsGame.csproj.GenerateResource.Cache
 C:\LyricsGame2\LyricsGame\LyricsGame\obj\Debug\LyricsGame.dll
 C:\LyricsGame2\LyricsGame\LyricsGame\obj\Debug\LyricsGame.pdb
+C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\bin\DotNetOpenAuth.pdb
+C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\bin\DotNetOpenAuth.xml
