@@ -34,7 +34,14 @@ namespace LyricsGame.Controllers
         {
             var db = new UsersContext();
             var profiles = db.UserProfiles;
-            List<UserProfile> results = (from p in profiles orderby p.Points descending select p).Take(5).ToList();
+
+            var username = User.Identity.Name;
+            var user = from p in profiles
+                       where p.UserName == username
+                       select p;
+            var activeUser = user.FirstOrDefault();
+
+            List<UserProfile> results = (from p in profiles orderby p.Points descending select p).Take(10).ToList();
             List<string> leaders = new List<string>();
             List<int> points = new List<int>();
             foreach (var result in results)
@@ -44,8 +51,28 @@ namespace LyricsGame.Controllers
             }
             ViewBag.leaders = leaders;
             ViewBag.points = points;
+            if (activeUser != null)
+            {
+                ViewBag.myrank = activeUser.Rank;
+                ViewBag.mypoints = activeUser.Points;
+
+                string origrank = activeUser.Rank;
+                string currentRank = origrank;
+                int pointsTilNext = 0;
+                int myPoints = activeUser.Points;
+                while (currentRank == origrank)
+                {
+                    pointsTilNext++;
+                    currentRank = Ranks.GetRank(myPoints + pointsTilNext);
+                }
+                ViewBag.pointstogo = pointsTilNext;
+
+            }
+            
             return PartialView("Leaderboard");
         }
+
+
 
 
     }
