@@ -3,29 +3,14 @@
 }
 
 <div id="sidebar">
-    @if (Request.IsAuthenticated)
-    {
-        <text>
-        <h2>Welcome, @Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage" })!</h2>
-        <br />
-        You currently rank: x. You need x points to rank up.        
-    </text>
-    }
-    else
-    {
-        <text><h2>You are not logged in.</h2></text>
-    }
-
     @{Html.RenderAction("Leaderboard", "Home");}
-    
-    <hr>
 </div>
 
 <div id="content">
 
     <h4>Welcome to The Lyrics Game!</h4>
     <h2>Guess the lyrics in the song clip you hear. If you are correct, you get points as well as add to our Lyrics Wiki</h2>
-    <h5>CLICK HERE TO PLAY!</h5>
+    <h5>@Html.ActionLink("CLICK HERE TO PLAY!", "Index", "Game")</h5>
     <br>
     <br>
     <br>

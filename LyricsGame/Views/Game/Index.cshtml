@@ -2,19 +2,25 @@
     ViewBag.Title = "Play on";
 }
 <script src="~/Scripts/jquery-1.7.1.min.js"></script>
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h2>@ViewBag.Message</h2>
-</hgroup>
 
-    <div id="content">
-        @Html.Partial("GameScreen")
-    </div>
-    <script>
-        function Submit() {
-            var chkdRB = $("[name='flags']:checked").val();
-            pauseClip();
-            $.post('@Url.Action("GameScreen", "Game")', {
+<div id="sidebar">
+
+
+    @{Html.RenderAction("Leaderboard", "Home");}
+
+</div>
+<div id="content">
+    <hgroup class="title">
+        <h1>@ViewBag.Title.</h1>
+        <h2>@ViewBag.Message</h2>
+    </hgroup>
+    @Html.Partial("GameScreen")
+</div>
+<script>
+    function Submit() {
+        var chkdRB = $("[name='flags']:checked").val();
+        pauseClip();
+        $.post('@Url.Action("GameScreen", "Game")', {
                 flags:
                     chkdRB,
                 segmentID:
@@ -31,6 +37,6 @@
             });
         }
 
-    </script>
-    
+</script>
+
 

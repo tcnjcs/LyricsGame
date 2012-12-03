@@ -5,6 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Globalization;
 using System.Web.Security;
+using System.Web;
+using System.Linq;
 
 namespace LyricsGame.Models
 {
@@ -33,25 +35,35 @@ namespace LyricsGame.Models
         public string Picture { get; set; }
     }
 
-    public class Ranks
+    public static class Ranks
     {
-        public string GetRank(int points)
+        public static void UpdateRank(string username)
         {
-            if (points >= 0)
-                return "Loser";
-            
-            if (points >= 50)
-                return "Not a loser";
+            var db = new UsersContext();
+            var profiles = db.UserProfiles;
 
-            if (points >= 100)
-                return "Aiight";
+            var user = from p in profiles
+                       where p.UserName == username
+                       select p;
+            var activeUser = user.FirstOrDefault();
 
-            if (points >= 500)
-                return "Funk Master Flex";
+            string rank = Ranks.GetRank(activeUser.Points);
 
+            activeUser.Rank = rank;
+            db.SaveChanges();
+        }
+        public static string GetRank(int points)
+        {
             if (points >= 1000)
                 return "Master Lyricist";
-
+            else if (points >= 500)
+                return "Funk Master Flex";
+            else if (points >= 100)
+                return "Aiight";
+            else if (points >= 50)
+                return "Not a loser";
+            else if (points >= 0)
+                return "Loser";
 
             return "Unranked";
         }

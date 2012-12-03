@@ -94,6 +94,9 @@ namespace LyricsGame.Controllers
             TimeSpan now = DateTime.UtcNow - new DateTime(1970, 1, 1);
             ViewBag.StartTime = now.TotalSeconds;
             uc.SaveChanges();
+
+            Ranks.UpdateRank(activeUser.UserName);
+            
             return PartialView("GameScreen");
         }
 

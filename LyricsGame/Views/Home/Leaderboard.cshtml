@@ -1,4 +1,16 @@
-﻿<h2>Leaderboard</h2>
+﻿    @if (Request.IsAuthenticated)
+    {
+        <text>
+        <h2>Welcome, @Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage" })!</h2>
+        <br />
+        You currently rank: <b>@ViewBag.myrank </b>. You need <b>@ViewBag.pointstogo </b> points to rank up.        
+    </text>
+    }
+    else
+    {
+        <text><h2>You are not logged in.</h2></text>
+    }
+<h2>Leaderboard</h2>
 <ol>
     @for (var i = 0; i < ViewBag.leaders.Count; i++)
     {
