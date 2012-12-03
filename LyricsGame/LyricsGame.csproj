@@ -171,7 +171,6 @@
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MusicController.cs" />
-    <Compile Include="Controllers\SelectList.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -184,10 +183,31 @@
     <Compile Include="Migrations\201211250529522_flagHandling.Designer.cs">
       <DependentUpon>201211250529522_flagHandling.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201211292346470_LyricStatsAndLyricUsers.cs" />
+    <Compile Include="Migrations\201211292346470_LyricStatsAndLyricUsers.Designer.cs">
+      <DependentUpon>201211292346470_LyricStatsAndLyricUsers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201211300002563_fixDBcontext.cs" />
+    <Compile Include="Migrations\201211300002563_fixDBcontext.Designer.cs">
+      <DependentUpon>201211300002563_fixDBcontext.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201211300011225_collectionToSegments.cs" />
+    <Compile Include="Migrations\201211300011225_collectionToSegments.Designer.cs">
+      <DependentUpon>201211300011225_collectionToSegments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201211300217393_lyricsinStats.cs" />
+    <Compile Include="Migrations\201211300217393_lyricsinStats.Designer.cs">
+      <DependentUpon>201211300217393_lyricsinStats.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201211300447215_musicComplete.cs" />
+    <Compile Include="Migrations\201211300447215_musicComplete.Designer.cs">
+      <DependentUpon>201211300447215_musicComplete.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\FlagHandler.cs" />
-    <Compile Include="Models\GenreHandler.cs" />
+    <Compile Include="Models\LyricsStatsModel.cs" />
+    <Compile Include="Models\LyricsUserModel.cs" />
+    <Compile Include="Models\InputProcessor.cs" />
     <Compile Include="Models\LyricSegmentModel.cs" />
     <Compile Include="Models\MusicModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -306,7 +326,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Game\Error.cshtml" />
     <Content Include="Views\Game\Results.cshtml" />
-    <Content Include="Views\Game\GenreSelector.cshtml" />
+    <Content Include="Views\Game\GameScreen.cshtml" />
     <None Include="Views\Game\Index.cshtml" />
     <Content Include="Views\Music\Index.cshtml" />
     <Content Include="Views\Music\Details.cshtml" />
@@ -314,6 +334,7 @@
     <Content Include="Views\Music\Edit.cshtml" />
     <Content Include="Views\Music\Delete.cshtml" />
     <Content Include="Views\Game\SelectedResultSong.cshtml" />
+    <Content Include="Views\Game\ResultSongPossibleLyrics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -328,6 +349,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201211250529522_flagHandling.resx">
       <DependentUpon>201211250529522_flagHandling.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201211292346470_LyricStatsAndLyricUsers.resx">
+      <DependentUpon>201211292346470_LyricStatsAndLyricUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201211300002563_fixDBcontext.resx">
+      <DependentUpon>201211300002563_fixDBcontext.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201211300011225_collectionToSegments.resx">
+      <DependentUpon>201211300011225_collectionToSegments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201211300217393_lyricsinStats.resx">
+      <DependentUpon>201211300217393_lyricsinStats.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201211300447215_musicComplete.resx">
+      <DependentUpon>201211300447215_musicComplete.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

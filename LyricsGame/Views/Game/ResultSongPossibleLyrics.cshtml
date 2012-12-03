@@ -1,0 +1,14 @@
+﻿@using System.Data
+@model System.Data.DataTable
+    
+
+@foreach (DataRow row in Model.Rows)
+{
+    var i = 0;
+    <tr>
+        @foreach (var cell in row.ItemArray)
+        {
+            <td style="white-space:nowrap;">@cell.ToString()</td>
+        }
+    </tr> 
+}
