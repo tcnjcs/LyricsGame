@@ -8,6 +8,7 @@ using System.Data;
 
 namespace LyricsGame.Controllers
 {
+    [Authorize]
     public class GameController : Controller
     {
 

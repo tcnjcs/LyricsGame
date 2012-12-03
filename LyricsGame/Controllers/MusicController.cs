@@ -10,6 +10,7 @@ using Microsoft.WindowsAPICodePack.Shell;
 
 namespace LyricsGame.Controllers
 {
+    [Authorize]
     public class MusicController : Controller
     {
         private MusicDBContext db = new MusicDBContext();
