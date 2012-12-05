@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using LyricsGame.Models;
 using System.Data;
+using System.Web.Script.Serialization;
+using System.Dynamic;
 
 namespace LyricsGame.Controllers
 {
@@ -17,7 +19,7 @@ namespace LyricsGame.Controllers
 
         static Random rnd = new Random();
 
-
+        [Authorize]
         public ActionResult Index()
         {
             ViewBag.Partial = "GameScreen";
@@ -122,31 +124,10 @@ namespace LyricsGame.Controllers
             ViewBag.FilePath = song.FilePath;
             ViewBag.Title = song.Title;
             ViewBag.Artist = song.Artist;
-
-            return PartialView("SelectedResultSong", db.Lyrics.Where(ls => ls.MusicID == musicID));
-        }
-
-        [HttpPost]
-        public ActionResult ResultSongPossibleLyrics(String songID)
-        {
-            int musicID = -1;
-
-            try
-            {
-                musicID = Int16.Parse(songID);
-            }
-            catch (Exception e)
-            {
-                Response.StatusCode = 500;
-                Response.StatusDescription = "The selected song has been moved or deleted. Please return to the home page and start a new round.";
-                return null;
-            }
-
-            Music song = db.Music.Find(musicID);
-            IList<LyricSegment> lyricSeg = song.Lyrics.ToList();
-            ViewBag.SegNum = lyricSeg.Count;
+            ViewBag.SegCount = song.Lyrics.Count;
+            
             int maxSeg = 0;
-
+            IList<LyricSegment> lyricSeg = song.Lyrics.ToList();
             foreach (LyricSegment ls in lyricSeg)
             {
                 IList<LyricsStats> lyStat = db.LyricStats.Where(lstat => lstat.LyricSegmentID == ls.LyricSegmentID).ToList();
@@ -157,37 +138,7 @@ namespace LyricsGame.Controllers
             }
             ViewBag.MaxNumOfSegs = maxSeg;
 
-            DataTable dt = new DataTable("StatLyrics");
-
-            /*for (int i = 0; i < lyricSeg.Count; i++)
-            {
-                dt.Columns.Add(new DataColumn(i.ToString(),typeof(string)));
-            }*/
-
-            foreach (LyricSegment ls in lyricSeg)
-            {
-                dt.Columns.Add(new DataColumn(ls.LyricSegmentID.ToString(),typeof(string)));
-                IList<LyricsStats> lyStat = db.LyricStats.Where(lstat => lstat.LyricSegmentID == ls.LyricSegmentID).ToList();
-                int i = 0;
-                foreach (LyricsStats lys in lyStat)
-                {
-                    if (i >= dt.Rows.Count)
-                    {
-                        DataRow row = dt.NewRow();
-                        dt.Rows.Add(row);
-                    }
-                    dt.Rows[i][ls.LyricSegmentID.ToString()] = lys.Lyrics;
-                    i++;
-                }
-            }
-
-            /*for (int i = 0; i < maxSeg; i++)
-            {
-                DataRow row = dt.NewRow();
-                dt.Rows.Add(row);
-            }*/
-
-            return PartialView("ResultSongPossibleLyrics", dt);
+            return PartialView("SelectedResultSong", db.Lyrics.Where(ls => ls.MusicID == musicID));
         }
 
         public ActionResult Results()
@@ -203,8 +154,8 @@ namespace LyricsGame.Controllers
         {
             //If player is first to guess lyrics for segment, half the points for the segment will automatically 
             //be added to user's points. Players are awarded points if they match segment in database
+            string specGenre = "Electro house";
 
-            string specGenre = "genre";
             //Create List of musicIDs from the genre specified by the User
             List<int> idList = db.Music.Where(g => g.Genre == specGenre).Select(mID => mID.MusicID).ToList();
             int idIndex = rnd.Next(idList.Count);
@@ -256,6 +207,128 @@ namespace LyricsGame.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult GetLyricsForSong(String songID)
+        {
+            int musicID = -1;
+
+            try
+            {
+                musicID = Int16.Parse(songID);
+            }
+            catch (Exception e)
+            {
+                Response.StatusCode = 500;
+                Response.StatusDescription = "The selected song has been moved or deleted. Please return to the home page and start a new round.";
+                return null;
+            }
+
+            Music song = db.Music.Find(musicID);
+            IList<LyricSegment> lyricSegs = song.Lyrics.ToList();
+
+            var ret = new Dictionary<string, Dictionary<string, string>>{};
+
+            foreach (LyricSegment ls in lyricSegs)
+            {
+                IList<LyricsStats> lyStat = db.LyricStats.Where(lsStat => lsStat.LyricSegmentID == ls.LyricSegmentID).OrderBy(lst => lst.Votes).ToList();
+                Dictionary<string, string> d = new Dictionary<string, string>{};
+                foreach (LyricsStats lys in lyStat)
+                {
+                    if (lys.Available)
+                    {
+                        d.Add(lys.LyricsStatsID.ToString(), lys.Lyrics);
+                        //uncomment the above line and comment the below lin in order to only see "available" lystats.
+                    }
+                    //d.Add(lys.LyricsStatsID.ToString(), lys.Lyrics);
+                }
+                ret.Add(ls.LyricSegmentID.ToString(), d);
+            }
+
+            return Json(ret);
+        }
+
+        [HttpPost]
+        public ActionResult castVote(string statID)
+        {
+            int id = -1;
+
+            try
+            {
+                id = Int16.Parse(statID);
+            }
+            catch (Exception e)
+            {
+                Response.StatusCode = 500;
+                Response.StatusDescription = "The selected song has been moved or deleted. Please return to the home page and start a new round.";
+                return null;
+            }
+
+            LyricsStats lyStat = db.LyricStats.Where(ls => ls.LyricsStatsID == id).FirstOrDefault();
+            UserProfile activeUser = uc.UserProfiles.FirstOrDefault(g => g.UserName.ToLower() == User.Identity.Name);
+
+            IList<UserSegmentVotes> otherVote = db.UserSegmentVotes.Where(us => us.LyricSegmentID == lyStat.LyricSegmentID && us.UserID == activeUser.UserId).ToList();
+
+            if (otherVote.Count() == 0)
+            {
+                UserSegmentVotes newEntryUser = new UserSegmentVotes();
+                newEntryUser.LyricSegmentID = lyStat.LyricSegmentID;
+                newEntryUser.LyricsStatsID = lyStat.LyricsStatsID;
+                newEntryUser.UserID = activeUser.UserId;
+                db.UserSegmentVotes.Add(newEntryUser);
+                lyStat.Votes += 1;
+            }
+            else
+            {
+                UserSegmentVotes usv = otherVote.First();
+                int oldID = otherVote.First().LyricsStatsID;
+                IList<LyricsStats> oldCounts = db.LyricStats.Where(ls => ls.LyricsStatsID == oldID).ToList();
+
+                foreach (LyricsStats oldCount in oldCounts)
+                {
+                    oldCount.Votes -= 1;
+                }
+
+                lyStat.Votes += 1;
+                
+                UserSegmentVotes newEntryUser = new UserSegmentVotes();
+                newEntryUser.LyricSegmentID = lyStat.LyricSegmentID;
+                newEntryUser.LyricsStatsID = lyStat.LyricsStatsID;
+                newEntryUser.UserID = activeUser.UserId;
+                db.UserSegmentVotes.Add(newEntryUser);
+
+                db.UserSegmentVotes.Remove(usv);
+            }
+
+            /*IList<LyricsStats> test = db.LyricStats.ToArray();
+
+            foreach (LyricsStats test2 in test)
+            {
+                test2.Votes = 0;
+            }*/
+
+            db.SaveChanges();
+
+            return Json(new { });
+        }
+
+        [HttpPost]
+        public ActionResult getVotedList()
+        {
+            UserProfile activeUser = uc.UserProfiles.FirstOrDefault(g => g.UserName.ToLower() == User.Identity.Name);
+
+            IList<UserSegmentVotes> userVotes = db.UserSegmentVotes.Where(usv => usv.UserID == activeUser.UserId).ToList();
+
+            var ret = new Dictionary<string, string>();
+            int i = 0;
+
+            foreach (UserSegmentVotes uVotes in userVotes)
+            {
+                ret.Add(i.ToString(), uVotes.LyricsStatsID.ToString());
+                i++;
+            }
+
+            return Json(ret);
+        }
 
     }
 }

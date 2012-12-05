@@ -34,13 +34,15 @@ namespace LyricsGame.Controllers
         {
             var db = new UsersContext();
             var profiles = db.UserProfiles;
-
+            var activeUser = new UserProfile();
             var username = User.Identity.Name;
-            var user = from p in profiles
-                       where p.UserName == username
-                       select p;
-            var activeUser = user.FirstOrDefault();
-
+            if (username != null && username !="")
+            {
+                var user = from p in profiles
+                           where p.UserName == username
+                           select p;
+                activeUser = user.FirstOrDefault();
+            }
             List<UserProfile> results = (from p in profiles orderby p.Points descending select p).Take(10).ToList();
             List<string> leaders = new List<string>();
             List<int> points = new List<int>();
