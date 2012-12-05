@@ -44,6 +44,10 @@
     #player {
         width: 100%;
     }
+
+    td.cells:hover {
+        cursor: pointer;
+    }
 </style>
 
 <script type="text/javascript">
@@ -77,10 +81,31 @@
         function (data) {
             //alert(data);
         });
+        //$(obj).css("background-color", "PaleGreen");
+        highlightVoted();
     }
 
     function setNewSong(path) {
         player.src = path;
+    }
+
+    function highlightVoted() {
+        $(".cells").filter(function () {
+            var match = 'rgb(244, 164, 96)';
+
+            return ($(this).css("background-color") != match);
+        }).css("background-color", "inherit");
+        
+
+        $.post('@Url.Action("GetVotedList","Game")', {
+        },
+        function (data) {
+            for (var key in data) {
+                //console.log("#B" + data[key]);
+                $("#B" + data[key]).css("background-color", "PaleGreen");
+                //$("#B100").css("background-color", "green");
+            }
+        });
     }
 </script>
 

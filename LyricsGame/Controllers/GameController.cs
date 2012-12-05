@@ -230,16 +230,16 @@ namespace LyricsGame.Controllers
 
             foreach (LyricSegment ls in lyricSegs)
             {
-                IList<LyricsStats> lyStat = db.LyricStats.Where(lsStat => lsStat.LyricSegmentID == ls.LyricSegmentID).ToList();
+                IList<LyricsStats> lyStat = db.LyricStats.Where(lsStat => lsStat.LyricSegmentID == ls.LyricSegmentID).OrderBy(lst => lst.Votes).ToList();
                 Dictionary<string, string> d = new Dictionary<string, string>{};
                 foreach (LyricsStats lys in lyStat)
                 {
                     if (lys.Available)
                     {
-                        //d.Add(lys.LyricsStatsID.ToString(), lys.Lyrics);
+                        d.Add(lys.LyricsStatsID.ToString(), lys.Lyrics);
                         //uncomment the above line and comment the below lin in order to only see "available" lystats.
                     }
-                    d.Add(lys.LyricsStatsID.ToString(), lys.Lyrics);
+                    //d.Add(lys.LyricsStatsID.ToString(), lys.Lyrics);
                 }
                 ret.Add(ls.LyricSegmentID.ToString(), d);
             }
@@ -289,7 +289,7 @@ namespace LyricsGame.Controllers
                 }
 
                 lyStat.Votes += 1;
-
+                
                 UserSegmentVotes newEntryUser = new UserSegmentVotes();
                 newEntryUser.LyricSegmentID = lyStat.LyricSegmentID;
                 newEntryUser.LyricsStatsID = lyStat.LyricsStatsID;
@@ -309,6 +309,25 @@ namespace LyricsGame.Controllers
             db.SaveChanges();
 
             return Json(new { });
+        }
+
+        [HttpPost]
+        public ActionResult getVotedList()
+        {
+            UserProfile activeUser = uc.UserProfiles.FirstOrDefault(g => g.UserName.ToLower() == User.Identity.Name);
+
+            IList<UserSegmentVotes> userVotes = db.UserSegmentVotes.Where(usv => usv.UserID == activeUser.UserId).ToList();
+
+            var ret = new Dictionary<string, string>();
+            int i = 0;
+
+            foreach (UserSegmentVotes uVotes in userVotes)
+            {
+                ret.Add(i.ToString(), uVotes.LyricsStatsID.ToString());
+                i++;
+            }
+
+            return Json(ret);
         }
 
     }

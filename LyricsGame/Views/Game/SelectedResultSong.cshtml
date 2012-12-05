@@ -10,7 +10,7 @@
         for (var i = 0; i < parseInt(@ViewBag.MaxNumOfSegs) ; i++) {
             $(segtable).append("<tr id='a" + i + "'></tr>");
             for (var j = 0; j < parseInt(@ViewBag.SegCount) ; j++) {
-                $("#segtable tr:last").append("<td style='white-space:nowrap;' onclick='voteForLyStat(this)'></td>");
+                $("#segtable tr:last").append("<td style='white-space:nowrap;' onclick='voteForLyStat(this)' class='cells'></td>");
             }
         }
         var rowcount = 1;
@@ -30,7 +30,10 @@
             colcount++;
             rowcount = 1;
         }
+        highlightVoted();
     });
+
+    
 </script>
 
 <h1>Top #X Lyrics</h1> <!-- How many tops are we displaying do we count if lower etc-->
