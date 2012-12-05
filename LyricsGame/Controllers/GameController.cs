@@ -247,6 +247,38 @@ namespace LyricsGame.Controllers
             return Json(ret);
         }
 
+        [HttpPost]
+        public ActionResult castVote(string statID)
+        {
+            int id = -1;
+
+            try
+            {
+                id = Int16.Parse(statID);
+            }
+            catch (Exception e)
+            {
+                Response.StatusCode = 500;
+                Response.StatusDescription = "The selected song has been moved or deleted. Please return to the home page and start a new round.";
+                return null;
+            }
+
+            LyricsStats lyStat = db.LyricStats.Where(ls => ls.LyricsStatsID == id).FirstOrDefault();
+
+            List<UserSegmentVotes> otherVote = db.UserSegmentVotes.Where(us => us.LyricSegmentID == lyStat.LyricSegmentID).ToList();
+
+            if (otherVote.Count() == 0)
+            {
+                UserSegmentVotes newEntryUser = new UserSegmentVotes();
+                newEntryUser.LyricSegmentID = lyStat.LyricSegmentID;
+                //newEntryUser.LyricsStatsID = userSub.LyricsStatsID;
+                //newEntryUser.UserID = activeUser.UserId;
+                db.UserSegmentVotes.Add(newEntryUser);
+            }
+
+            return Json(new { });
+        }
+
 
     }
 }

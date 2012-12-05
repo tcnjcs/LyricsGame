@@ -10,7 +10,7 @@
         for (var i = 0; i < parseInt(@ViewBag.MaxNumOfSegs); i++) {
             $(segtable).append("<tr id='a"+i+"'></tr>");
             for (var j = 0; j < parseInt(@ViewBag.SegCount); j++) {
-                $("#segtable tr:last").append("<td style='white-space:nowrap;'></td>");
+                $("#segtable tr:last").append("<td style='white-space:nowrap;' onclick='voteForLyStat(this)'></td>");
             }
         }
         var rowcount = 1;

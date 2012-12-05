@@ -65,6 +65,13 @@
         });
     }
 
+    function voteForLyStat(obj) {
+        if (obj == null) { return; }
+        if ($(obj).attr("id") == undefined) { return; }
+        var id = parseInt($(obj).attr("id").replace("B", ""));
+        alert(id);
+    }
+
     function setNewSong(path) {
         player.src = path;
     }
