@@ -48,20 +48,34 @@
 
 <script type="text/javascript">
     var songPath = "";
-    
+
     function songSelected(obj) {
         $("#title").text($(obj).text());
 
         $("table.songselector td").css("background-color", "white");
         $(obj).css("background-color", "lightblue");
 
-        var id =  $(obj).siblings(":first").text();
+        var id = $(obj).siblings(":first").text();
         $.post('@Url.Action("SelectedResultSong", "Game")', {
             songID:
                 id
         },
         function (data) {
             $(".lyricsview").html(data);
+        });
+    }
+
+    function voteForLyStat(obj) {
+        if (obj == null) { return; }
+        if ($(obj).attr("id") == undefined) { return; }
+        var id = parseInt($(obj).attr("id").replace("B", ""));
+
+        $.post('@Url.Action("castVote", "Game")', {
+            statID:
+                id
+        },
+        function (data) {
+            //alert(data);
         });
     }
 
@@ -107,7 +121,4 @@
     </div>
 
 </div>
-
-
-
 

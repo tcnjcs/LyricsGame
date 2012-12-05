@@ -247,6 +247,69 @@ namespace LyricsGame.Controllers
             return Json(ret);
         }
 
+        [HttpPost]
+        public ActionResult castVote(string statID)
+        {
+            int id = -1;
+
+            try
+            {
+                id = Int16.Parse(statID);
+            }
+            catch (Exception e)
+            {
+                Response.StatusCode = 500;
+                Response.StatusDescription = "The selected song has been moved or deleted. Please return to the home page and start a new round.";
+                return null;
+            }
+
+            LyricsStats lyStat = db.LyricStats.Where(ls => ls.LyricsStatsID == id).FirstOrDefault();
+            UserProfile activeUser = uc.UserProfiles.FirstOrDefault(g => g.UserName.ToLower() == User.Identity.Name);
+
+            IList<UserSegmentVotes> otherVote = db.UserSegmentVotes.Where(us => us.LyricSegmentID == lyStat.LyricSegmentID && us.UserID == activeUser.UserId).ToList();
+
+            if (otherVote.Count() == 0)
+            {
+                UserSegmentVotes newEntryUser = new UserSegmentVotes();
+                newEntryUser.LyricSegmentID = lyStat.LyricSegmentID;
+                newEntryUser.LyricsStatsID = lyStat.LyricsStatsID;
+                newEntryUser.UserID = activeUser.UserId;
+                db.UserSegmentVotes.Add(newEntryUser);
+                lyStat.Votes += 1;
+            }
+            else
+            {
+                UserSegmentVotes usv = otherVote.First();
+                int oldID = otherVote.First().LyricsStatsID;
+                IList<LyricsStats> oldCounts = db.LyricStats.Where(ls => ls.LyricsStatsID == oldID).ToList();
+
+                foreach (LyricsStats oldCount in oldCounts)
+                {
+                    oldCount.Votes -= 1;
+                }
+
+                lyStat.Votes += 1;
+
+                UserSegmentVotes newEntryUser = new UserSegmentVotes();
+                newEntryUser.LyricSegmentID = lyStat.LyricSegmentID;
+                newEntryUser.LyricsStatsID = lyStat.LyricsStatsID;
+                newEntryUser.UserID = activeUser.UserId;
+                db.UserSegmentVotes.Add(newEntryUser);
+
+                db.UserSegmentVotes.Remove(usv);
+            }
+
+            /*IList<LyricsStats> test = db.LyricStats.ToArray();
+
+            foreach (LyricsStats test2 in test)
+            {
+                test2.Votes = 0;
+            }*/
+
+            db.SaveChanges();
+
+            return Json(new { });
+        }
 
     }
 }

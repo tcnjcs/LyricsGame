@@ -7,24 +7,24 @@
             id
     },
     function (data) {
-        for (var i = 0; i < parseInt(@ViewBag.MaxNumOfSegs); i++) {
-            $(segtable).append("<tr id='a"+i+"'></tr>");
-            for (var j = 0; j < parseInt(@ViewBag.SegCount); j++) {
-                $("#segtable tr:last").append("<td style='white-space:nowrap;'></td>");
+        for (var i = 0; i < parseInt(@ViewBag.MaxNumOfSegs) ; i++) {
+            $(segtable).append("<tr id='a" + i + "'></tr>");
+            for (var j = 0; j < parseInt(@ViewBag.SegCount) ; j++) {
+                $("#segtable tr:last").append("<td style='white-space:nowrap;' onclick='voteForLyStat(this)'></td>");
             }
         }
         var rowcount = 1;
         var colcount = 0;
         for (var key in data) {
 
-            for (var k in data[key]) {                
-       
-                var row = $("#segtable tr:nth-child(" + (rowcount+1) + ")");
+            for (var k in data[key]) {
+
+                var row = $("#segtable tr:nth-child(" + (rowcount + 1) + ")");
 
                 var id = $(row).attr("id");
 
                 $("#" + id + " td:nth-child(" + (colcount + 1) + ")").text(data[key][k]);
-                $("#" + id + " td:nth-child(" + (colcount + 1) + ")").attr("id", "B"+k.toString())
+                $("#" + id + " td:nth-child(" + (colcount + 1) + ")").attr("id", "B" + k.toString())
                 rowcount++;
             }
             colcount++;
