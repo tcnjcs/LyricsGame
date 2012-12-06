@@ -135,12 +135,15 @@ namespace LyricsGame.Models
                 }
 
                 //Check if user input is in top 5 submissions
-                List<LyricsStats> topResults = (from p in db.LyricStats orderby p.Votes descending select p).Take(5).ToList();
+                List<LyricsStats> topResults = (from p in db.LyricStats where p.LyricSegmentID == segment.LyricSegmentID orderby p.Votes descending select p).Take(5).ToList();
                 for (int i = 0; i < topResults.Count(); i++)
                 {
-                    if (topResults[i].Lyrics.Equals(input))
-                        match = true;
-
+                    if (topResults.Count() != 0)
+                    {
+                        String entryMod = rgx.Replace(lyricStatEntries[i].Lyrics, "");
+                        if (entryMod.Equals(inputMod))
+                            match = true;
+                    }
                 }
                 
             }

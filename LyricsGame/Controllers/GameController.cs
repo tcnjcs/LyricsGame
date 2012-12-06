@@ -154,7 +154,7 @@ namespace LyricsGame.Controllers
         {
             //If player is first to guess lyrics for segment, half the points for the segment will automatically 
             //be added to user's points. Players are awarded points if they match segment in database
-            string specGenre = "Electro house";
+            string specGenre = "rock";
 
             //Create List of musicIDs from the genre specified by the User
             List<int> idList = db.Music.Where(g => g.Genre == specGenre).Select(mID => mID.MusicID).ToList();
@@ -186,7 +186,7 @@ namespace LyricsGame.Controllers
                 ViewBag.Time = possibleUsers[userNum].Time;
             }
             else
-                ViewBag.Time = 17;
+                ViewBag.Time = 40;
 
         }
 
@@ -234,11 +234,11 @@ namespace LyricsGame.Controllers
                 Dictionary<string, string> d = new Dictionary<string, string>{};
                 foreach (LyricsStats lys in lyStat)
                 {
-                    if (lys.Available)
-                    {
+                    //if (lys.Available)
+                    //{
                         d.Add(lys.LyricsStatsID.ToString(), lys.Lyrics);
                         //uncomment the above line and comment the below lin in order to only see "available" lystats.
-                    }
+                   // }
                     //d.Add(lys.LyricsStatsID.ToString(), lys.Lyrics);
                 }
                 ret.Add(ls.LyricSegmentID.ToString(), d);
