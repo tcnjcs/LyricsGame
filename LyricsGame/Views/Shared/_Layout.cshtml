@@ -31,12 +31,9 @@
 <li class="header" style="position: relative;">
 @Html.ActionLink("PLAY", "Index", "Game")</li>
 <li class="header" style="position: relative;">
-@Html.ActionLink("Upload Music", "Create", "Music")
-</li>
-
+@Html.ActionLink("Upload Music", "Create", "Music")</li>
 <li class="header" style="position: relative;">
-@Html.ActionLink("Browse Lyrics", "Results", "Game")
-</li>
+@Html.ActionLink("Browse Lyrics", "Results", "Game")</li>
 
 <li class="header" style="position: relative;">
 <a href="http://www.tcnj.edu">Scoreboard</a>
@@ -45,6 +42,10 @@
 <li class="header" style="position: relative;">
 <a href="http://www.tcnj.edu">Edit Profile</a>
 </li>
+
+<li class="header" style="position: relative;">
+@Html.ActionLink("Select Your Genre", "GenreSelector", "Game")</li>
+
 </ul></div>
         <div id="body">
             @RenderSection("featured", required: false)

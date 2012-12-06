@@ -154,10 +154,25 @@ namespace LyricsGame.Controllers
         {
             //If player is first to guess lyrics for segment, half the points for the segment will automatically 
             //be added to user's points. Players are awarded points if they match segment in database
-            string specGenre = "Electro house";
-
             //Create List of musicIDs from the genre specified by the User
-            List<int> idList = db.Music.Where(g => g.Genre == specGenre).Select(mID => mID.MusicID).ToList();
+            List<int> idList = new List<int>();
+            string userName = User.Identity.Name;
+            UserProfile activeUser = uc.UserProfiles.FirstOrDefault(g => g.UserName.ToLower() == userName);
+            string specGenre = activeUser.ActiveGenre;
+            if (specGenre == "")
+            {
+                specGenre = "Random";
+            }
+
+            if (specGenre == "Random")
+            {
+                idList = db.Music.Where(g => g.Genre != specGenre).Select(mID => mID.MusicID).ToList();
+            }
+            else
+            {
+                idList = db.Music.Where(g => g.Genre == specGenre).Select(mID => mID.MusicID).ToList();
+            }
+         
             int idIndex = rnd.Next(idList.Count);
             int musicID = idList[idIndex];
 
@@ -190,22 +205,35 @@ namespace LyricsGame.Controllers
 
         }
 
+
         public ActionResult GenreSelector()
         {
+
             ViewBag.Message = "";
-            var Genres = db.Music.Select(g => g.Genre).Distinct().ToList();
+            List<string> Genres = db.Music.Select(g => g.Genre).Distinct().ToList();
             ViewBag.Genres = Genres;
-
-            return View(Genres);
-        }
-
-        [HttpPost]
-        public ActionResult GenreSelector(string selectedGenre)
-        {
-            ViewBag.Message = "";
 
             return View();
         }
+        
+
+        [HttpPost]
+        public ActionResult GenreSelector(FormCollection collection)
+        {
+
+            List<string> Genres = db.Music.Select(g => g.Genre).Distinct().ToList();
+            ViewBag.Genres = Genres;
+
+            string choiceGenre = collection["Choice"];
+
+            string userName = User.Identity.Name;
+            UserProfile activeUser = uc.UserProfiles.FirstOrDefault(g => g.UserName.ToLower() == userName);
+            activeUser.ActiveGenre = choiceGenre;
+            uc.SaveChanges();
+
+            return View();
+        }
+
 
         [HttpPost]
         public ActionResult GetLyricsForSong(String songID)
