@@ -155,13 +155,6 @@ C:\LyricsGame2\LyricsGame\LyricsGame\bin\DotNetOpenAuth.OAuth.Consumer.xml
 C:\LyricsGame2\LyricsGame\LyricsGame\bin\DotNetOpenAuth.OAuth.xml
 C:\LyricsGame2\LyricsGame\LyricsGame\bin\DotNetOpenAuth.OpenId.xml
 C:\LyricsGame2\LyricsGame\LyricsGame\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
-C:\LyricsGame2\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.addWords.resources
-C:\LyricsGame2\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.flagHandling.resources
-C:\LyricsGame2\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.LyricStatsAndLyricUsers.resources
-C:\LyricsGame2\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.fixDBcontext.resources
-C:\LyricsGame2\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.collectionToSegments.resources
-C:\LyricsGame2\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.lyricsinStats.resources
-C:\LyricsGame2\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.musicComplete.resources
 C:\LyricsGame2\LyricsGame\LyricsGame\obj\Debug\LyricsGame.csproj.GenerateResource.Cache
 C:\LyricsGame2\LyricsGame\LyricsGame\obj\Debug\LyricsGame.dll
 C:\LyricsGame2\LyricsGame\LyricsGame\obj\Debug\LyricsGame.pdb
@@ -173,3 +166,4 @@ C:\Users\Leebe\documents\visual studio 2012\Projects\LyricsGame\LyricsGame\obj\D
 C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\bin\DotNetOpenAuth.pdb
 C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\bin\DotNetOpenAuth.xml
 C:\Users\Barrington-MK2.5\Documents\TCNJ\Coding Environment\LG\LyricsGame\obj\Debug\LyricsGame.Migrations.userSegmentVotes.resources
+C:\LyricsGame2\LyricsGame\LyricsGame\obj\Debug\LyricsGame.Migrations.userSegmentVotes.resources
