@@ -22,6 +22,17 @@ namespace LyricsGame.Controllers
         [Authorize]
         public ActionResult Index()
         {
+            UserProfile activeUser = uc.UserProfiles.FirstOrDefault(g => g.UserName.ToLower() == User.Identity.Name);
+            if (activeUser != null)
+                if (activeUser.ActiveGenre == "" || activeUser.ActiveGenre == null)
+                    return RedirectToAction("GenreSelector");
+            var music = (from m in db.Music select m).Take(1).ToList();
+
+            if (music.Count() == 0)
+            {
+                return RedirectToAction("Create", "Music");
+            }
+            
             ViewBag.Partial = "GameScreen";
             sendSongSegment();
 
@@ -35,7 +46,7 @@ namespace LyricsGame.Controllers
         {
              int lyricSegID = 1;
             UserProfile activeUser = uc.UserProfiles.FirstOrDefault(g => g.UserName.ToLower() == User.Identity.Name);
-   
+            
             //Prevent breaking things if improper segmentID recieved
             try
             {
@@ -155,7 +166,7 @@ namespace LyricsGame.Controllers
             string userName = User.Identity.Name;
             UserProfile activeUser = uc.UserProfiles.FirstOrDefault(g => g.UserName.ToLower() == userName);
             string specGenre = activeUser.ActiveGenre;
-            if (specGenre == "")
+            if (specGenre == "" || specGenre == null)
             {
                 specGenre = "Random";
             }
@@ -206,7 +217,10 @@ namespace LyricsGame.Controllers
             ViewBag.Message = "";
             List<string> Genres = db.Music.Select(g => g.Genre).Distinct().ToList();
             ViewBag.Genres = Genres;
+            string userName = User.Identity.Name;
+            UserProfile activeUser = uc.UserProfiles.FirstOrDefault(g => g.UserName.ToLower() == userName);
 
+            ViewBag.currentGenre = activeUser.ActiveGenre;
             return View();
         }
 
@@ -223,8 +237,8 @@ namespace LyricsGame.Controllers
             UserProfile activeUser = uc.UserProfiles.FirstOrDefault(g => g.UserName.ToLower() == userName);
             activeUser.ActiveGenre = choiceGenre;
             uc.SaveChanges();
-
-            return View();
+            ViewBag.currentGenre = choiceGenre;
+            return RedirectToAction("Index");
         }
 
         [HttpPost]

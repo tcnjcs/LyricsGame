@@ -311,6 +311,7 @@
     <Content Include="Views\Game\Error.cshtml" />
     <Content Include="Views\Game\Results.cshtml" />
     <Content Include="Views\Game\GameScreen.cshtml" />
+    <Content Include="Views\Game\GenreSelector.cshtml" />
     <None Include="Views\Game\Index.cshtml" />
     <Content Include="Views\Music\Index.cshtml" />
     <Content Include="Views\Music\Details.cshtml" />

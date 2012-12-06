@@ -7,17 +7,14 @@
             id
     },
     function (data) {
-<<<<<<< HEAD
         for (var i = 0; i < parseInt(@ViewBag.MaxNumOfSegs) ; i++) {
             $(segtable).append("<tr id='a" + i + "'></tr>");
             for (var j = 0; j < parseInt(@ViewBag.SegCount) ; j++) {
                 $("#segtable tr:last").append("<td style='white-space:nowrap;' onclick='voteForLyStat(this)' class='cells'></td>");
-=======
         for (var i = 0; i < parseInt(@ViewBag.MaxNumOfSegs); i++) {
             $(segtable).append("<tr id='a"+i+"'></tr>");
             for (var j = 0; j < parseInt(@ViewBag.SegCount); j++) {
                 $("#segtable tr:last").append("<td style='white-space:nowrap;' onclick='voteForLyStat(this)'></td>");
->>>>>>> origin/Voting
             }
         }
         var rowcount = 1;
