@@ -1,0 +1,32 @@
+﻿@model IEnumerable<LyricsGame.Models.UserProfile>
+
+@{
+    var selectedGenre = "";
+    if (Request["Choice"] != "")
+    {
+        selectedGenre = Request["Choice"];
+    }
+    
+    <h1>Preferred Genre</h1>
+    
+    //post form to the contoller
+    <form method="post"> 
+    <select name="Choice" id="Choice">
+    <option>Random</option>
+    
+   @foreach (var item in ViewBag.Genres)
+   {
+        <option id=@item>@item</option>
+   }    
+    </select>
+    <input type="submit" value="Submit" />
+    </form>
+
+
+    //Display currently suggested genre
+    if (selectedGenre != "")
+    {   
+        <p>Current Genre: @selectedGenre </p>
+    }
+    
+}
