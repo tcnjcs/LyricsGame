@@ -292,14 +292,20 @@ namespace LyricsGame.Controllers
             }
 
             LyricsStats lyStat = db.LyricStats.Where(ls => ls.LyricsStatsID == id).FirstOrDefault();
+<<<<<<< HEAD
             UserProfile activeUser = uc.UserProfiles.FirstOrDefault(g => g.UserName.ToLower() == User.Identity.Name);
 
             IList<UserSegmentVotes> otherVote = db.UserSegmentVotes.Where(us => us.LyricSegmentID == lyStat.LyricSegmentID && us.UserID == activeUser.UserId).ToList();
+=======
+
+            List<UserSegmentVotes> otherVote = db.UserSegmentVotes.Where(us => us.LyricSegmentID == lyStat.LyricSegmentID).ToList();
+>>>>>>> origin/Voting
 
             if (otherVote.Count() == 0)
             {
                 UserSegmentVotes newEntryUser = new UserSegmentVotes();
                 newEntryUser.LyricSegmentID = lyStat.LyricSegmentID;
+<<<<<<< HEAD
                 newEntryUser.LyricsStatsID = lyStat.LyricsStatsID;
                 newEntryUser.UserID = activeUser.UserId;
                 db.UserSegmentVotes.Add(newEntryUser);
@@ -335,10 +341,17 @@ namespace LyricsGame.Controllers
             }*/
 
             db.SaveChanges();
+=======
+                //newEntryUser.LyricsStatsID = userSub.LyricsStatsID;
+                //newEntryUser.UserID = activeUser.UserId;
+                db.UserSegmentVotes.Add(newEntryUser);
+            }
+>>>>>>> origin/Voting
 
             return Json(new { });
         }
 
+<<<<<<< HEAD
         [HttpPost]
         public ActionResult getVotedList()
         {
@@ -357,6 +370,8 @@ namespace LyricsGame.Controllers
 
             return Json(ret);
         }
+=======
+>>>>>>> origin/Voting
 
     }
 }

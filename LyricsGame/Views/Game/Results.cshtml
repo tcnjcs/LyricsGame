@@ -73,6 +73,7 @@
         if (obj == null) { return; }
         if ($(obj).attr("id") == undefined) { return; }
         var id = parseInt($(obj).attr("id").replace("B", ""));
+<<<<<<< HEAD
 
         $.post('@Url.Action("castVote", "Game")', {
             statID:
@@ -83,6 +84,9 @@
         });
         //$(obj).css("background-color", "PaleGreen");
         highlightVoted();
+=======
+        alert(id);
+>>>>>>> origin/Voting
     }
 
     function setNewSong(path) {
