@@ -154,10 +154,25 @@ namespace LyricsGame.Controllers
         {
             //If player is first to guess lyrics for segment, half the points for the segment will automatically 
             //be added to user's points. Players are awarded points if they match segment in database
-            string specGenre = "rock";
-
             //Create List of musicIDs from the genre specified by the User
-            List<int> idList = db.Music.Where(g => g.Genre == specGenre).Select(mID => mID.MusicID).ToList();
+            List<int> idList = new List<int>();
+            string userName = User.Identity.Name;
+            UserProfile activeUser = uc.UserProfiles.FirstOrDefault(g => g.UserName.ToLower() == userName);
+            string specGenre = activeUser.ActiveGenre;
+            if (specGenre == "")
+            {
+                specGenre = "Random";
+            }
+
+            if (specGenre == "Random")
+            {
+                idList = db.Music.Where(g => g.Genre != specGenre).Select(mID => mID.MusicID).ToList();
+            }
+            else
+            {
+                idList = db.Music.Where(g => g.Genre == specGenre).Select(mID => mID.MusicID).ToList();
+            }
+         
             int idIndex = rnd.Next(idList.Count);
             int musicID = idList[idIndex];
 
@@ -186,26 +201,39 @@ namespace LyricsGame.Controllers
                 ViewBag.Time = possibleUsers[userNum].Time;
             }
             else
-                ViewBag.Time = 40;
+                ViewBag.Time = 17;
 
         }
+
 
         public ActionResult GenreSelector()
         {
+
             ViewBag.Message = "";
-            var Genres = db.Music.Select(g => g.Genre).Distinct().ToList();
+            List<string> Genres = db.Music.Select(g => g.Genre).Distinct().ToList();
             ViewBag.Genres = Genres;
-
-            return View(Genres);
-        }
-
-        [HttpPost]
-        public ActionResult GenreSelector(string selectedGenre)
-        {
-            ViewBag.Message = "";
 
             return View();
         }
+        
+
+        [HttpPost]
+        public ActionResult GenreSelector(FormCollection collection)
+        {
+
+            List<string> Genres = db.Music.Select(g => g.Genre).Distinct().ToList();
+            ViewBag.Genres = Genres;
+
+            string choiceGenre = collection["Choice"];
+
+            string userName = User.Identity.Name;
+            UserProfile activeUser = uc.UserProfiles.FirstOrDefault(g => g.UserName.ToLower() == userName);
+            activeUser.ActiveGenre = choiceGenre;
+            uc.SaveChanges();
+
+            return View();
+        }
+
 
         [HttpPost]
         public ActionResult GetLyricsForSong(String songID)
@@ -234,11 +262,11 @@ namespace LyricsGame.Controllers
                 Dictionary<string, string> d = new Dictionary<string, string>{};
                 foreach (LyricsStats lys in lyStat)
                 {
-                    //if (lys.Available)
-                    //{
+                    if (lys.Available)
+                    {
                         d.Add(lys.LyricsStatsID.ToString(), lys.Lyrics);
                         //uncomment the above line and comment the below lin in order to only see "available" lystats.
-                   // }
+                    }
                     //d.Add(lys.LyricsStatsID.ToString(), lys.Lyrics);
                 }
                 ret.Add(ls.LyricSegmentID.ToString(), d);
@@ -264,14 +292,20 @@ namespace LyricsGame.Controllers
             }
 
             LyricsStats lyStat = db.LyricStats.Where(ls => ls.LyricsStatsID == id).FirstOrDefault();
+<<<<<<< HEAD
             UserProfile activeUser = uc.UserProfiles.FirstOrDefault(g => g.UserName.ToLower() == User.Identity.Name);
 
             IList<UserSegmentVotes> otherVote = db.UserSegmentVotes.Where(us => us.LyricSegmentID == lyStat.LyricSegmentID && us.UserID == activeUser.UserId).ToList();
+=======
+
+            List<UserSegmentVotes> otherVote = db.UserSegmentVotes.Where(us => us.LyricSegmentID == lyStat.LyricSegmentID).ToList();
+>>>>>>> origin/Voting
 
             if (otherVote.Count() == 0)
             {
                 UserSegmentVotes newEntryUser = new UserSegmentVotes();
                 newEntryUser.LyricSegmentID = lyStat.LyricSegmentID;
+<<<<<<< HEAD
                 newEntryUser.LyricsStatsID = lyStat.LyricsStatsID;
                 newEntryUser.UserID = activeUser.UserId;
                 db.UserSegmentVotes.Add(newEntryUser);
@@ -307,10 +341,17 @@ namespace LyricsGame.Controllers
             }*/
 
             db.SaveChanges();
+=======
+                //newEntryUser.LyricsStatsID = userSub.LyricsStatsID;
+                //newEntryUser.UserID = activeUser.UserId;
+                db.UserSegmentVotes.Add(newEntryUser);
+            }
+>>>>>>> origin/Voting
 
             return Json(new { });
         }
 
+<<<<<<< HEAD
         [HttpPost]
         public ActionResult getVotedList()
         {
@@ -329,6 +370,8 @@ namespace LyricsGame.Controllers
 
             return Json(ret);
         }
+=======
+>>>>>>> origin/Voting
 
     }
 }
