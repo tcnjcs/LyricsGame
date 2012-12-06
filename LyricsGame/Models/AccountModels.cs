@@ -35,8 +35,13 @@ namespace LyricsGame.Models
         public string Picture { get; set; }
     }
 
+
     public static class Ranks
     {
+        /// <summary>
+        /// Looks up user by username to find the current points and updates their rank.
+        /// </summary>
+        /// <param name="username">The user's username</param>
         public static void UpdateRank(string username)
         {
             var db = new UsersContext();
@@ -52,6 +57,11 @@ namespace LyricsGame.Models
             activeUser.Rank = rank;
             db.SaveChanges();
         }
+        /// <summary>
+        /// Takes in a point amount to determine the corresponding rank.
+        /// </summary>
+        /// <param name="points">User's current points</param>
+        /// <returns>User's current rank</returns>
         public static string GetRank(int points)
         {
             if (points >= 1000)
@@ -129,6 +139,9 @@ namespace LyricsGame.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
+    /// <summary>
+    /// unused
+    /// </summary>
     public class FacebookRegisterModel
     {
         public string fbLogin { get; set; }
@@ -136,6 +149,10 @@ namespace LyricsGame.Models
         public string fbLast_Name { get; set; }
         public string fbProfPic { get; set; }
     }
+
+    /// <summary>
+    /// used for any external login (including facebook).
+    /// </summary>
     public class ExternalLogin
     {
         public string Provider { get; set; }

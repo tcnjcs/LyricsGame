@@ -53,6 +53,7 @@
                 document.getElementById("statusText").innerHTML = "";
                 document.getElementById("enemyInput").value = "Opponent Typing..";
 
+                window.clearTimeout(timer);
                 var time = '@ViewBag.Time'
                 var interval = time * 1000;
 
